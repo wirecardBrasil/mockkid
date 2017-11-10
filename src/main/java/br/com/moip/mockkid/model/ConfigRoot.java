@@ -1,6 +1,6 @@
 package br.com.moip.mockkid.model;
 
-public class Config {
+public class ConfigRoot {
 	private Configuration configuration;
 
 	public Configuration getConfiguration() {

@@ -1,7 +1,7 @@
-package br.com.moip.mockkid.br.com.moip.mockkid.configuration;
+package br.com.moip.mockkid.configuration;
 
 
-import br.com.moip.mockkid.model.Config;
+import br.com.moip.mockkid.model.ConfigRoot;
 import br.com.moip.mockkid.model.Configuration;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -27,12 +27,12 @@ public class ConfigParser {
         System.out.println(toConfiguration(f).getConfiguration().getEndpoint().getUrl());
     }
 
-    public static Config toConfiguration(File file){
+    public static ConfigRoot toConfiguration(File file){
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Config config = null;
+        ConfigRoot config = null;
         try {
-            config = mapper.readValue(file, Config.class);
+            config = mapper.readValue(file, ConfigRoot.class);
             System.out.println(ReflectionToStringBuilder.toString(config, ToStringStyle.MULTI_LINE_STYLE));
         } catch (Exception e) {
             // TODO Auto-generated catch block

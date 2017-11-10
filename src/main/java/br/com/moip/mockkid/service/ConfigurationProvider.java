@@ -19,7 +19,6 @@ public class ConfigurationProvider {
     private Map<String, Configuration> configs;
 
     public ConfigurationProvider(){
-
         // TODO: change to called method that read config files and genarete map
         configs = mockConfiguration();
     }
@@ -41,7 +40,7 @@ public class ConfigurationProvider {
         ResponseConfiguration responseConfiguration = new ResponseConfiguration();
         responseConfiguration.setResponse(new Response());
         responseConfiguration.setConditional(new Conditional());
-        configuration.setResponses(Arrays.asList(responseConfiguration));
+        configuration.setResponseConfigurations(Arrays.asList(responseConfiguration));
 
         configs.put("/zyon", configuration);
 
