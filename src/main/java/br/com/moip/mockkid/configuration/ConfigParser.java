@@ -6,6 +6,7 @@ import br.com.moip.mockkid.model.Configuration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -20,6 +21,9 @@ public class ConfigParser {
 
     private ObjectMapper mapper;
 
+    @Value("${configuration.path}")
+    private String configurationPath;
+
     public ConfigParser() {
         mapper = new ObjectMapper(new YAMLFactory());
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -32,10 +36,9 @@ public class ConfigParser {
     
     private Map<String, Configuration> openConfigurations() {
         Map<String, Configuration> configurations = new HashMap<>();
-
         try {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = resolver.getResources("classpath*:configuration/*.yaml");
+            Resource[] resources = resolver.getResources(configurationPath);
             extractConfigsFromResources(configurations, resources);
         } catch (IOException ioe) {
             System.out.println("Something nasty has happened while trying to read configuration files!");
