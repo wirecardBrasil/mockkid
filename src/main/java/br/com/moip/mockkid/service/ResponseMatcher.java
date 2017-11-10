@@ -4,9 +4,13 @@ import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,9 +97,25 @@ public class ResponseMatcher {
     private Map<String, String> resolveVariables(List<String> names, HttpServletRequest request) {
         Map<String, String> variables = new HashMap<>();
 
-        names.forEach(name -> {
+        for (String name : names) {
             if (name.startsWith("body.")) {
-                //TODO parse JSON/XML
+                try {
+                    JsonObject parse = (JsonObject) new JsonParser().parse(request.getReader());
+                    String[] nodes = name.replace("body.", "").split("\\.");
+
+                    JsonObject jsonObject = (JsonObject) parse.get(nodes[0]);
+                    for (int i=1; i<nodes.length-1; i++) {
+                        jsonObject = (JsonObject) jsonObject.get(nodes[i]);
+                    }
+                    JsonElement jsonElement = jsonObject.get(nodes[nodes.length - 1]);
+
+                    if (jsonElement != null) {
+                        String jsonVar = jsonElement.getAsString();
+                        if (jsonVar != null) variables.put(name, jsonVar);
+                    }
+                } catch (IOException e) {
+                    throw new IllegalArgumentException("Invalid JSON body :/");
+                }
             } else if (name.startsWith("headers.")) {
                 String header = request.getHeader(name.replace("headers.", ""));
                 if (header != null) variables.put(name, header);
@@ -103,7 +123,7 @@ public class ResponseMatcher {
                 String queryParam = request.getParameter(name.replace("url.", ""));
                 if (queryParam != null) variables.put(name, queryParam);
             }
-        });
+        }
 
         return variables;
     }
