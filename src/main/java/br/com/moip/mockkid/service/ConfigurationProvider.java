@@ -21,11 +21,11 @@ public class ConfigurationProvider {
     private Map<String, Configuration> configurations;
 
     public Configuration getConfiguration(HttpServletRequest request) {
-        return configurations.get(request.getRequestURI());
+        return configurations.get(request.getMethod() + ":" + request.getRequestURI());
     }
 
     public Map<String, Configuration> getConfigs(){
-        return configs;
+        return configurations;
     }
 
     private Map<String, Configuration> mockConfiguration() {

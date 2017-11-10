@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class ConfigParser {
 
         try {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = resolver.getResources("configuration/*.yaml");
+            Resource[] resources = resolver.getResources("classpath*:configuration/*.yaml");
             extractConfigsFromResources(configurations, resources);
         } catch (IOException ioe) {
             System.out.println("Something nasty has happened while trying to read configuration files!");
@@ -49,9 +49,14 @@ public class ConfigParser {
 
     private void extractConfigsFromResources(Map<String, Configuration> configurations, Resource[] resources) throws IOException {
         for (Resource r : resources) {
-            ConfigRoot configRoot = toConfiguration(r.getFile());
-            if (configRoot != null)
-                configurations.put(mapKey(configRoot.getConfiguration()), configRoot.getConfiguration());
+            try {
+                ConfigRoot configRoot = toConfiguration(r.getInputStream());
+                if (configRoot != null)
+                    configurations.put(mapKey(configRoot.getConfiguration()), configRoot.getConfiguration());
+            } catch (Exception e) {
+                System.out.println("Failed reading configuration from file: " + r.getFile().getName() + ", skipping...");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -59,14 +64,8 @@ public class ConfigParser {
         return configuration.getEndpoint().getMethod() + ":" + configuration.getEndpoint().getUrl();
     }
 
-    private ConfigRoot toConfiguration(File file){
-        try {
-            return mapper.readValue(file, ConfigRoot.class);
-        } catch (Exception e) {
-            System.out.println("Failed reading configuration from file: " + file.getName() + ", skipping...");
-            e.printStackTrace();
-        }
-        return null;
+    private ConfigRoot toConfiguration(InputStream in) throws IOException {
+        return mapper.readValue(in, ConfigRoot.class);
     }
 
     private void printConfig(Map<String, Configuration> configurations) {
@@ -74,9 +73,10 @@ public class ConfigParser {
         System.out.println("EXTRACTED CONFIGURATIONS:");
         for (String key : configurations.keySet()) {
             System.out.println();
-            System.out.println("KEY: " + key);
-            System.out.println("CONFIG: " + configurations.get(key));
+            System.out.println("KEY= " + key);
+            System.out.println("CONFIG= " + configurations.get(key));
         }
         System.out.println("-------------------------");
     }
+
 }
