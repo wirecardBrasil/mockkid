@@ -15,11 +15,21 @@ public class Configuration {
         this.endpoint = endpoint;
     }
 
+    public Configuration withEndpoint(Endpoint endpoint) {
+        this.endpoint = endpoint;
+        return this;
+    }
+
     public List<ResponseConfiguration> getResponses() {
         return responses;
     }
 
     public void setResponses(List<ResponseConfiguration> responses) {
         this.responses = responses;
+    }
+
+    public Configuration withResponses(List<ResponseConfiguration> responses) {
+        this.responses = responses;
+        return this;
     }
 }
