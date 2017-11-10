@@ -97,9 +97,11 @@ public class ResponseMatcher {
             if (name.startsWith("body.")) {
                 //TODO parse JSON/XML
             } else if (name.startsWith("headers.")) {
-                variables.put(name, request.getHeader(name.replace("headers.", "")));
+                String header = request.getHeader(name.replace("headers.", ""));
+                if (header != null) variables.put(name, header);
             } else if (name.startsWith("url.")) {
-                variables.put(name, request.getParameter(name.replace("url.", "")));
+                String queryParam = request.getParameter(name.replace("url.", ""));
+                if (queryParam != null) variables.put(name, queryParam);
             }
         });
 

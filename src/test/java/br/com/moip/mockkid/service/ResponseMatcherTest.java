@@ -27,6 +27,7 @@ public class ResponseMatcherTest {
     @Test
     public void testContainsHeader() {
         Mockito.when(httpServletRequestMock.getHeader("authorization")).thenReturn("vavis");
+        Mockito.when(httpServletRequestMock.getParameter("xpto")).thenReturn("patronus");
 
         Response response = responseMatcher.getResponse(buildConfiguration(), httpServletRequestMock);
 
@@ -35,7 +36,7 @@ public class ResponseMatcherTest {
 
     private Configuration buildConfiguration() {
         Conditional c1 = new Conditional(ConditionalType.EQUALS, "headers.authorization", "vavis");
-        Response response1 = new Response(200,null, "Body do ${headers.authorization}");
+        Response response1 = new Response(200,null, "Body do ${url.xpto}");
 
         ResponseConfiguration rc1 = new ResponseConfiguration();
         rc1.setConditional(c1);
