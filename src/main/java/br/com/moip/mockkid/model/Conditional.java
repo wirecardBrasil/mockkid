@@ -13,6 +13,11 @@ public class Conditional {
         this.type = type;
     }
 
+    public Conditional withType(ConditionalType type) {
+        this.type = type;
+        return this;
+    }
+
     public String getElement() {
         return element;
     }
@@ -21,12 +26,22 @@ public class Conditional {
         this.element = element;
     }
 
+    public Conditional withElement(String element) {
+        this.element = element;
+        return this;
+    }
+
     public String getValue() {
         return value;
     }
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Conditional withValue(String value) {
+        this.value = value;
+        return this;
     }
 
     @Override

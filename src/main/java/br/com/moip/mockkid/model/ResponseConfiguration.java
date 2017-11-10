@@ -2,8 +2,17 @@ package br.com.moip.mockkid.model;
 
 public class ResponseConfiguration {
 
+    private String name;
     private Conditional conditional;
     private Response response;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Conditional getConditional() {
         return conditional;
