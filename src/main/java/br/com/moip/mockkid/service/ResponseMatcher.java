@@ -44,14 +44,15 @@ public class ResponseMatcher {
 
     private ResponseConfiguration findMatchedConditionalOrDefault(Configuration config, HttpServletRequest request) {
         Map<String, String> variables = resolveElementVariables(config, request);
-        for (ResponseConfiguration r : config.getResponses()) {
+        for (ResponseConfiguration r : config.getResponseConfigurations()) {
             if (checkConditional(r.getConditional(), variables)) {
                 return  r;
             }
         }
 
         List<ResponseConfiguration> defaults =
-                config.getResponses().stream().filter(r -> r.getConditional() == null).collect(Collectors.toList());
+                config.getResponseConfigurations().stream()
+                        .filter(r -> r.getConditional() == null).collect(Collectors.toList());
 
         return (defaults.isEmpty() ? null : defaults.get(0));
     }
@@ -71,7 +72,8 @@ public class ResponseMatcher {
 
     private Map<String, String> resolveElementVariables(Configuration config, HttpServletRequest request) {
         List<String> elements =
-                config.getResponses().stream().map(m -> m.getConditional().getElement()).collect(Collectors.toList());
+                config.getResponseConfigurations().stream()
+                        .map(m -> m.getConditional().getElement()).collect(Collectors.toList());
         return resolveVariables(elements, request);
     }
 
