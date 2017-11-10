@@ -7,6 +7,15 @@ public class Response {
     private Map<String, String> headers;
     private String body;
 
+    public Response() {
+    }
+
+    public Response(Integer status, Map<String, String> headers, String body) {
+        this.status = status;
+        this.headers = headers;
+        this.body = body;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -44,5 +53,14 @@ public class Response {
     public Response withBody(String body) {
         this.body = body;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status=" + status +
+                ", headers=" + headers +
+                ", body='" + body + '\'' +
+                '}';
     }
 }

@@ -1,9 +1,19 @@
 package br.com.moip.mockkid.model;
 
 public class Conditional {
+
     private ConditionalType type;
     private String element;
     private String value;
+
+    public Conditional() {
+    }
+
+    public Conditional(ConditionalType type, String element, String value) {
+        this.type = type;
+        this.element = element;
+        this.value = value;
+    }
 
     public ConditionalType getType() {
         return type;

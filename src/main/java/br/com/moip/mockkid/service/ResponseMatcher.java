@@ -39,6 +39,7 @@ public class ResponseMatcher {
             body = body.replace("${" + entry.getKey() + "}", entry.getValue());
         }
 
+        responseConfiguration.getResponse().setBody(body);
         return responseConfiguration.getResponse();
     }
 
@@ -80,7 +81,7 @@ public class ResponseMatcher {
     private Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
         List<String> names = new ArrayList<>();
 
-        Matcher matcher = Pattern.compile("\\$\\{([a-zA-Z]*)\\}").matcher(config.getResponse().getBody());
+        Matcher matcher = Pattern.compile("\\$\\{([a-zA-Z\\.]*)\\}").matcher(config.getResponse().getBody());
         while (matcher.find()) {
             names.add(matcher.group().replace("${", "").replace("}", ""));
         }
