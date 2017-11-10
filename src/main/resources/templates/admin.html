@@ -5,6 +5,15 @@
     </head>
     <body>
         <h3>Hello Folk</h3>
-        <h5 th:text="'Hello, ' + ${message} + '!'" />
+        <h5 th:text="'Hello, ' + ${configs} + '!'" />
+
+
+        <tr th:each="config, stat : ${configs}">
+
+            <td><input type="text"
+                       th:name="config.getEndpoint().getUrl()"
+                       th:value="${config.getEndpoint().getUrl()}"  />
+            </td>
+        </tr>
     </body>
 </html>

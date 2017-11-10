@@ -1,6 +1,7 @@
 package br.com.moip.mockkid.controller;
 
 import br.com.moip.mockkid.facade.MockKidFacade;
+import br.com.moip.mockkid.service.ConfigurationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ public class MockKidController {
     @Autowired
     private MockKidFacade facade;
 
+    @Autowired
+    private ConfigurationProvider configurationProvider;
     @RequestMapping(path = "/mockkid", method= RequestMethod.GET)
     public String admin(Model model) {
 
-        model.addAttribute("message", "kkk eai man");
+        model.addAttribute("configs", configurationProvider.getConfigs().values());
 
         return "admin";
     }

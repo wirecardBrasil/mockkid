@@ -28,6 +28,10 @@ public class ConfigurationProvider {
         return configs.get(request.getRequestURI());
     }
 
+    public Map<String, Configuration> getConfigs(){
+        return configs;
+    }
+
     private Map<String, Configuration> mockConfiguration() {
         Map<String, Configuration> configs = new HashMap<>();
 
