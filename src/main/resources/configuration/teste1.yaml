@@ -14,19 +14,19 @@ configuration:
         headers:
           content-type: application/json
         body: |
-          {"xpto":${body.xpto}, "status": "WIN"}
+          {"xpto": "${headers.authorization}", "status": "WIN"}
     - responseConfiguration:
       name: "config2"
       conditional:
         type: CONTAINS
-        element: body.xpto
+        element: url.xpto
         value: PETRONI
       response:
         status: 404
         headers:
           content-type: application/json
         body: |
-          {"xpto":${body.xpto}, "status": "FAIL"}
+          {"xpto": "${url.xpto}", "status": "FAIL"}
     - responseConfiguration:
       name: "default"
       response:
@@ -34,4 +34,4 @@ configuration:
         headers:
           content-type: application/json
         body: |
-          {"xpto":${body.xpto}, "status": "FAIL"}
+          {"xpto": "MY BAD", "status": "FAIL"}
