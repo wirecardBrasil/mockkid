@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MockkidApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MockkidApplication.class, args);
+
 	}
 }

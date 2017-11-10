@@ -1,0 +1,34 @@
+configuration:
+  endpoint:
+    url: /myendpoint/fixed
+    method: GET
+  responseConfigurations:
+    responseConfiguration:
+      conditional:
+        type: EQUALS
+        element: headers.authorization
+        value: VAVIS
+      response:
+        status: 200
+        headers:
+          - content-type: ...
+        body: |
+          {"xpto":$body.xpto, "status": WIN}
+    responseConfiguration:
+      conditional:
+        type: CONTAINS
+        element: body.xpto
+        value: PETRONI
+      response:
+        status: 404
+        headers:
+          - content-type: ...
+        body: |
+          {"xpto":$body.xpto, "status": FAIL}
+    responseConfiguration:
+      response:
+        status: 401
+        headers:
+          - content-type: ...
+        body: |
+          {"xpto":$body.xpto, "status": FAIL}
