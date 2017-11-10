@@ -44,7 +44,7 @@ public class MockKidController {
         return null;
     }
 
-    @RequestMapping("/*")
+    @RequestMapping("/**")
     public ResponseEntity mocks(HttpServletRequest request){
         return facade.discover(request);
     }

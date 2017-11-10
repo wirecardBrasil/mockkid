@@ -39,13 +39,14 @@ public class ResponseMatcher {
             body = body.replace("${" + entry.getKey() + "}", entry.getValue());
         }
 
+        responseConfiguration.getResponse().setBody(body);
         return responseConfiguration.getResponse();
     }
 
     private ResponseConfiguration findMatchedConditionalOrDefault(Configuration config, HttpServletRequest request) {
         Map<String, String> variables = resolveElementVariables(config, request);
         for (ResponseConfiguration r : config.getResponseConfigurations()) {
-            if (checkConditional(r.getConditional(), variables)) {
+            if (r.getConditional() != null && checkConditional(r.getConditional(), variables)) {
                 return  r;
             }
         }
@@ -73,6 +74,7 @@ public class ResponseMatcher {
     private Map<String, String> resolveElementVariables(Configuration config, HttpServletRequest request) {
         List<String> elements =
                 config.getResponseConfigurations().stream()
+                        .filter(m -> m.getConditional() != null)
                         .map(m -> m.getConditional().getElement()).collect(Collectors.toList());
         return resolveVariables(elements, request);
     }
@@ -80,7 +82,7 @@ public class ResponseMatcher {
     private Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
         List<String> names = new ArrayList<>();
 
-        Matcher matcher = Pattern.compile("\\$\\{([a-zA-Z]*)\\}").matcher(config.getResponse().getBody());
+        Matcher matcher = Pattern.compile("\\$\\{([a-zA-Z\\.]*)\\}").matcher(config.getResponse().getBody());
         while (matcher.find()) {
             names.add(matcher.group().replace("${", "").replace("}", ""));
         }
@@ -95,9 +97,11 @@ public class ResponseMatcher {
             if (name.startsWith("body.")) {
                 //TODO parse JSON/XML
             } else if (name.startsWith("headers.")) {
-                variables.put(name, request.getHeader(name.replace("headers.", "")));
+                String header = request.getHeader(name.replace("headers.", ""));
+                if (header != null) variables.put(name, header);
             } else if (name.startsWith("url.")) {
-                variables.put(name, request.getParameter(name.replace("url.", "")));
+                String queryParam = request.getParameter(name.replace("url.", ""));
+                if (queryParam != null) variables.put(name, queryParam);
             }
         });
 
