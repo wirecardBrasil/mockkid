@@ -31,7 +31,7 @@ public class MockKidController {
 
         model.addAttribute("configs", configurationProvider.getConfigs().values());
 
-        return "admin";
+        return "index";
     }
 
     @RequestMapping(path = "/mockkid", method = RequestMethod.PUT)
