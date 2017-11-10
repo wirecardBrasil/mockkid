@@ -12,11 +12,21 @@ public class Endpoint {
         this.url = url;
     }
 
+    public Endpoint withUrl (String url) {
+        this.url = url;
+        return this;
+    }
+
     public Method getMethod() {
         return method;
     }
 
     public void setMethod(Method method) {
         this.method = method;
+    }
+
+    public Endpoint withMethod (Method method) {
+        this.method = method;
+        return this;
     }
 }
