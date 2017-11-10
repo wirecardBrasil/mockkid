@@ -29,4 +29,12 @@ public class Endpoint {
         this.method = method;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Endpoint{" +
+                "url='" + url + '\'' +
+                ", method=" + method +
+                '}';
+    }
 }

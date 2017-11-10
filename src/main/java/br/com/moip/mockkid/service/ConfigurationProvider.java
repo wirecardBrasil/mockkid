@@ -6,6 +6,7 @@ import br.com.moip.mockkid.model.Endpoint;
 import br.com.moip.mockkid.model.Method;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +17,15 @@ import java.util.Map;
 @Component
 public class ConfigurationProvider {
 
-    private Map<String, Configuration> configs;
-
-    public ConfigurationProvider(){
-        // TODO: change to called method that read config files and genarete map
-        configs = mockConfiguration();
-    }
+    @Autowired
+    private Map<String, Configuration> configurations;
 
     public Configuration getConfiguration(HttpServletRequest request) {
-        return configs.get(request.getRequestURI());
+        return configurations.get(request.getMethod() + ":" + request.getRequestURI());
     }
 
     public Map<String, Configuration> getConfigs(){
-        return configs;
+        return configurations;
     }
 
     private Map<String, Configuration> mockConfiguration() {

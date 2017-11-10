@@ -10,4 +10,16 @@ public class ConfigRoot {
 	public void setConfiguration(Configuration configuration) {
 		this.configuration = configuration;
 	}
+
+	public ConfigRoot withConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "ConfigRoot{" +
+				"configuration=" + configuration +
+				'}';
+	}
 }

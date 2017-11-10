@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div id="app">
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+          <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          </div>
+          <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+            <h3>Mock Kid</h3>
+          </div>
+          <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          </div>
+          <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+            <a href="#overview" class="mdl-layout__tab is-active">Overview</a>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
+              <i class="material-icons" role="presentation">add</i>
+              <span class="visuallyhidden">Add</span>
+            </button>
+            <div class="mdl-tooltip" for="add">
+              Criar novo Mock
+            </div>
+          </div>
+        </header>
+        <main class="mdl-layout__content">
+          <div class="mdl-layout__tab-panel is-active" id="overview">
+            <section class="section-services section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+              <div class="service-card mdl-card">
+                <div class="mdl-card__title">
+                  <h2 class="mdl-card__title-text">
+                    <code class="tag">POST</code>
+                    Cielo
+                  </h2>
+                  <div class="mdl-card__menu">
+                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                      <i class="material-icons">keyboard_arrow_right</i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <dialog class="mdl-dialog">
+                <h4 class="mdl-dialog__title">Cielo</h4>
+                <div class="mdl-dialog__content">
+                  <h4 class="mdl-cell mdl-cell--12-col">Configurações Disponíveis</h4>
+                  <ul class="mdl-list">
+                    <li class="mdl-list__item">
+                      <div>
+                        <a href="#" class="accordion-link">
+                          <span class="mdl-list__item-primary-content">
+                            <span class="response-item__title">
+                              <i class="status-indicator --200" title="Resposta esperada: 200">200</i>
+                              <span>{{ response.alias }}</span>
+                            </span>
+                          </span>
+                        </a>
+                        <div class="accordion-content">
+                          <form action="#">
+                            <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="mdl-list__item mdl-list__item--accordion">
+                      <div>
+                        <a href="#" class="accordion-link">
+                          <span class="mdl-list__item-primary-content">
+                            <span class="response-item__title">
+                              <i class="status-indicator --500" title="Resposta esperada: 500">500</i>
+                              <span>{{ response.alias }}</span>
+                            </span>
+                          </span>
+                        </a>
+                        <div class="accordion-content">
+                          <form action="#">
+                            <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                              <div class="mdl-cell mdl-cell--6-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                  <input class="mdl-textfield__input" type="text" id="sample1">
+                                  <label class="mdl-textfield__label" for="sample1">Text...</label>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mdl-dialog__actions">
+                  <button type="button" class="mdl-button">Salvar</button>
+                  <button type="button" class="mdl-button mdl-button-dialog close">Cancelar</button>
+                </div>
+              </dialog>
+            </section>
+          </div>
+
+          <!-- <footer class="mdl-mega-footer">
+            <div class="mdl-mega-footer--middle-section">
+              <div class="mdl-mega-footer--drop-down-section">
+                <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+                <h1 class="mdl-mega-footer--heading">Features</h1>
+                <ul class="mdl-mega-footer--link-list">
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Terms</a></li>
+                  <li><a href="#">Partners</a></li>
+                  <li><a href="#">Updates</a></li>
+                </ul>
+              </div>
+              <div class="mdl-mega-footer--drop-down-section">
+                <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+                <h1 class="mdl-mega-footer--heading">Details</h1>
+                <ul class="mdl-mega-footer--link-list">
+                  <li><a href="#">Spec</a></li>
+                  <li><a href="#">Tools</a></li>
+                  <li><a href="#">Resources</a></li>
+                </ul>
+              </div>
+              <div class="mdl-mega-footer--drop-down-section">
+                <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+                <h1 class="mdl-mega-footer--heading">Technology</h1>
+                <ul class="mdl-mega-footer--link-list">
+                  <li><a href="#">How it works</a></li>
+                  <li><a href="#">Patterns</a></li>
+                  <li><a href="#">Usage</a></li>
+                  <li><a href="#">Products</a></li>
+                  <li><a href="#">Contracts</a></li>
+                </ul>
+              </div>
+              <div class="mdl-mega-footer--drop-down-section">
+                <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+                <h1 class="mdl-mega-footer--heading">FAQ</h1>
+                <ul class="mdl-mega-footer--link-list">
+                  <li><a href="#">Questions</a></li>
+                  <li><a href="#">Answers</a></li>
+                  <li><a href="#">Contact us</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mdl-mega-footer--bottom-section">
+              <div class="mdl-logo">
+                More Information
+              </div>
+              <ul class="mdl-mega-footer--link-list">
+                <li><a href="https://developers.google.com/web/starter-kit/">Web Starter Kit</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Privacy and Terms</a></li>
+              </ul>
+            </div>
+          </footer> -->
+
+        </main>
+      </div>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="../static/scripts/main.js"></script>
+  </body>
+</html>
