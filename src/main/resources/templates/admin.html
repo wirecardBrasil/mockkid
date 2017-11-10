@@ -8,11 +8,20 @@
         <h5 th:text="'Hello, ' + ${configs} + '!'" />
 
 
-        <tr th:each="config, stat : ${configs}">
+        <tr th:each="configuration, stat : ${configs}">
             <td><input type="text"
-                       th:name="${config.getEndpoint().getUrl()}"
-                       th:value="${config.getEndpoint().getUrl()}"  />
+                       th:name="${configuration.getEndpoint().getUrl()}"
+                       th:value="${configuration.getEndpoint().getUrl()}"  />
             </td>
+
+            <form action="#" th:action="@{/mockkid}" th:object="${configuration}" method="put">
+                <input type="text" th:field="${enpoint.url}" />
+                <input type="submit" />
+            </form>
         </tr>
+
+
+
+
     </body>
 </html>

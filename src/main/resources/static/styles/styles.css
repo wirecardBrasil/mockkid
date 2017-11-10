@@ -270,11 +270,19 @@ html, body {
   color: #fff;
 }
 
-.status-indicator.--200 {
+.status-indicator.--200,
+.status-indicator.--201 {
   background-color: #0ecd0e;
 }
 
-.status-indicator.--500 {
+.status-indicator.--404,
+.status-indicator.--401,
+.status-indicator.--400{
+  background-color: #5eabd9;
+}
+
+.status-indicator.--500,
+.status-indicator.--500{
   background-color: #ff4747;
 }
 
