@@ -13,7 +13,6 @@ public class MockKidController {
 
     @RequestMapping(path = "/mockkid", method= RequestMethod.GET)
     public String admin(Model model) {
-        System.out.println("passei aqui mano aaaaaaa");
 
         model.addAttribute("message", "kkk eai man");
 
