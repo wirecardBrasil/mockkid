@@ -103,11 +103,14 @@ public class ResponseMatcher {
                     JsonObject parse = (JsonObject) new JsonParser().parse(request.getReader());
                     String[] nodes = name.replace("body.", "").split("\\.");
 
-                    JsonObject jsonObject = (JsonObject) parse.get(nodes[0]);
-                    for (int i=1; i<nodes.length-1; i++) {
-                        jsonObject = (JsonObject) jsonObject.get(nodes[i]);
+                    JsonElement jsonElement = parse.get(nodes[0]);
+                    if (jsonElement instanceof JsonObject && nodes.length>1) {
+                        JsonObject jsonObject = (JsonObject) jsonElement;
+                        for (int i=1; i<nodes.length-1; i++) {
+                            jsonObject = (JsonObject) jsonObject.get(nodes[i]);
+                        }
+                        jsonElement = jsonObject.get(nodes[nodes.length - 1]);
                     }
-                    JsonElement jsonElement = jsonObject.get(nodes[nodes.length - 1]);
 
                     if (jsonElement != null) {
                         String jsonVar = jsonElement.getAsString();
