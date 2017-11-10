@@ -45,4 +45,13 @@ public class Response {
         this.body = body;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status=" + status +
+                ", headers=" + headers +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }

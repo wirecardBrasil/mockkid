@@ -3,7 +3,8 @@ configuration:
     url: /myendpoint/fixed
     method: GET
   responseConfigurations:
-    responseConfiguration:
+    - responseConfiguration:
+      name: "config1"
       conditional:
         type: EQUALS
         element: headers.authorization
@@ -11,10 +12,11 @@ configuration:
       response:
         status: 200
         headers:
-          - content-type: ...
+          content-type: application/json
         body: |
-          {"xpto":$body.xpto, "status": WIN}
-    responseConfiguration:
+          {"xpto":${body.xpto}, "status": "WIN"}
+    - responseConfiguration:
+      name: "config2"
       conditional:
         type: CONTAINS
         element: body.xpto
@@ -22,13 +24,14 @@ configuration:
       response:
         status: 404
         headers:
-          - content-type: ...
+          content-type: application/json
         body: |
-          {"xpto":$body.xpto, "status": FAIL}
-    responseConfiguration:
+          {"xpto":${body.xpto}, "status": "FAIL"}
+    - responseConfiguration:
+      name: "default"
       response:
         status: 401
         headers:
-          - content-type: ...
+          content-type: application/json
         body: |
-          {"xpto":$body.xpto, "status": FAIL}
+          {"xpto":${body.xpto}, "status": "FAIL"}

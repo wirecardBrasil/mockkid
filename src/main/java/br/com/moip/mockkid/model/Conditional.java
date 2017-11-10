@@ -43,4 +43,13 @@ public class Conditional {
         this.value = value;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Conditional{" +
+                "type=" + type +
+                ", element='" + element + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

@@ -20,11 +20,6 @@ public class Configuration {
         return this;
     }
 
-    public Configuration withResponses(List<ResponseConfiguration> responses) {
-        this.responseConfigurations = responses;
-        return this;
-    }
-
 	public List<ResponseConfiguration> getResponseConfigurations() {
 		return responseConfigurations;
 	}
@@ -32,4 +27,17 @@ public class Configuration {
 	public void setResponseConfigurations(List<ResponseConfiguration> responseConfigurations) {
 		this.responseConfigurations = responseConfigurations;
 	}
+
+    public Configuration withResponseConfigurations(List<ResponseConfiguration> responses) {
+        this.responseConfigurations = responses;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuration{" +
+                "endpoint=" + endpoint +
+                ", responseConfigurations=" + responseConfigurations +
+                '}';
+    }
 }

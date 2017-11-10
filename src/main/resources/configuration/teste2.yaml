@@ -1,0 +1,13 @@
+configuration:
+  endpoint:
+    url: /myendpoint/another
+    method: POST
+  responseConfigurations:
+    - responseConfiguration:
+      name: "default"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          {"xpto":${body.xpto}, "status": "FAIL"}
