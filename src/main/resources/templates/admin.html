@@ -9,9 +9,8 @@
 
 
         <tr th:each="config, stat : ${configs}">
-
             <td><input type="text"
-                       th:name="config.getEndpoint().getUrl()"
+                       th:name="${config.getEndpoint().getUrl()}"
                        th:value="${config.getEndpoint().getUrl()}"  />
             </td>
         </tr>

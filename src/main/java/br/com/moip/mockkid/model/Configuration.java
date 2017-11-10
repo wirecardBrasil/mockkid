@@ -5,7 +5,7 @@ import java.util.List;
 public class Configuration {
 
     private Endpoint endpoint;
-    private List<ResponseConfiguration> responses;
+    private List<ResponseConfiguration> responseConfigurations;
 
     public Endpoint getEndpoint() {
         return endpoint;
@@ -15,11 +15,21 @@ public class Configuration {
         this.endpoint = endpoint;
     }
 
-    public List<ResponseConfiguration> getResponses() {
-        return responses;
+    public Configuration withEndpoint(Endpoint endpoint) {
+        this.endpoint = endpoint;
+        return this;
     }
 
-    public void setResponses(List<ResponseConfiguration> responses) {
-        this.responses = responses;
+    public Configuration withResponses(List<ResponseConfiguration> responses) {
+        this.responseConfigurations = responses;
+        return this;
     }
+
+	public List<ResponseConfiguration> getResponseConfigurations() {
+		return responseConfigurations;
+	}
+
+	public void setResponseConfigurations(List<ResponseConfiguration> responseConfigurations) {
+		this.responseConfigurations = responseConfigurations;
+	}
 }
