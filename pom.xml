@@ -81,12 +81,6 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${apache.commons.version}</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
