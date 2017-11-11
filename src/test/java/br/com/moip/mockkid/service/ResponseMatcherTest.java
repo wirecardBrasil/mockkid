@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ResponseMatcherTest {
 
-    private ResponseMatcher responseMatcher = new ResponseMatcher();
+    private final ResponseMatcher responseMatcher = new ResponseMatcher();
 
     @Mock
     private HttpServletRequest httpServletRequestMock;

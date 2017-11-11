@@ -1,6 +1,5 @@
 package br.com.moip.mockkid.configuration;
 
-
 import br.com.moip.mockkid.model.ConfigRoot;
 import br.com.moip.mockkid.model.Configuration;
 import com.fasterxml.jackson.databind.DeserializationFeature;

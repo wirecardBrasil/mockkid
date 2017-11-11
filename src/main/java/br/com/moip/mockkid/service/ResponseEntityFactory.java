@@ -15,9 +15,10 @@ public class ResponseEntityFactory {
 
     private HttpHeaders headersFrom(Response matchedResponse) {
         HttpHeaders headers = new HttpHeaders();
-        matchedResponse.getHeaders().keySet().stream().forEach(
+        matchedResponse.getHeaders().keySet().forEach(
                 key -> headers.add(key, matchedResponse.getHeaders().get(key))
         );
         return headers;
     }
+
 }

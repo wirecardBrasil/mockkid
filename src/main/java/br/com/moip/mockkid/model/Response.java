@@ -3,6 +3,7 @@ package br.com.moip.mockkid.model;
 import java.util.Map;
 
 public class Response {
+
     private Integer status;
     private Map<String, String> headers;
     private String body;
@@ -63,4 +64,5 @@ public class Response {
                 ", body='" + body + '\'' +
                 '}';
     }
+
 }

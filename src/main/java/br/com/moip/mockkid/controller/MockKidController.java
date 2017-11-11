@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Mapping Endpoints
- * Created by zyon.silva on 11/10/17.
- */
 @Controller
 public class MockKidController {
 
@@ -28,24 +24,19 @@ public class MockKidController {
 
     @RequestMapping(path = "/mockkid", method= RequestMethod.GET)
     public String admin(Model model) {
-
         model.addAttribute("configs", configurationProvider.getConfigs().values());
-
         return "index";
     }
 
     @RequestMapping(path = "/mockkid", method = RequestMethod.PUT)
     public String editConfig(@RequestBody  Configuration configuration){
-
-        //TODO : implement methods
-
-        configuration.getEndpoint().getUrl();
-
-        return null;
+        //TODO: implement methods
+        return "index";
     }
 
     @RequestMapping("/**")
     public ResponseEntity mocks(HttpServletRequest request){
         return facade.discover(request);
     }
+
 }

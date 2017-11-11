@@ -1,6 +1,7 @@
 package br.com.moip.mockkid.model;
 
 public class ConfigRoot {
+
 	private Configuration configuration;
 
 	public Configuration getConfiguration() {
@@ -22,4 +23,5 @@ public class ConfigRoot {
 				"configuration=" + configuration +
 				'}';
 	}
+
 }

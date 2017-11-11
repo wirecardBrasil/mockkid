@@ -1,6 +1,7 @@
 package br.com.moip.mockkid.model;
 
 public class Endpoint {
+
     private String url;
     private Method method;
 
@@ -37,4 +38,5 @@ public class Endpoint {
                 ", method=" + method +
                 '}';
     }
+
 }
