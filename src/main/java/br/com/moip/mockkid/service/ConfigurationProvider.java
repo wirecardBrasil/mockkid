@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.service;
 
+import br.com.moip.mockkid.configuration.Configurations;
 import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.Endpoint;
@@ -18,13 +19,13 @@ import java.util.Map;
 public class ConfigurationProvider {
 
     @Autowired
-    private Map<String, Configuration> configurations;
+    private Configurations configurations;
 
     public Configuration getConfiguration(HttpServletRequest request) {
         return configurations.get(request.getMethod() + ":" + request.getRequestURI());
     }
 
-    public Map<String, Configuration> getConfigs(){
+    public Configurations getConfigs(){
         return configurations;
     }
 

@@ -13,7 +13,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 @org.springframework.context.annotation.Configuration
@@ -30,12 +29,12 @@ public class ConfigParser {
     }
 
     @Bean
-    public Map<String, Configuration> configurations() {
+    public Configurations configurations() {
         return openConfigurations();
     }
     
-    private Map<String, Configuration> openConfigurations() {
-        Map<String, Configuration> configurations = new HashMap<>();
+    private Configurations openConfigurations() {
+        Configurations configurations = new Configurations();
         try {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             Resource[] resources = resolver.getResources(configurationPath);
@@ -46,7 +45,7 @@ public class ConfigParser {
             throw new IllegalStateException(ioe);
         }
 
-        printConfig(configurations);
+        printConfigurations(configurations);
         return configurations;
     }
 
@@ -71,7 +70,7 @@ public class ConfigParser {
         return mapper.readValue(in, ConfigRoot.class);
     }
 
-    private void printConfig(Map<String, Configuration> configurations) {
+    private void printConfigurations(Configurations configurations) {
         System.out.println("-------------------------");
         System.out.println("EXTRACTED CONFIGURATIONS:");
         for (String key : configurations.keySet()) {
