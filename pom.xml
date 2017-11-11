@@ -3,13 +3,28 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<name>MockKid</name>
+	<description>Mocking your kiddos since 2017</description>
+	<url>https://github.com/moip/mockkid</url>
+
 	<groupId>br.com.moip</groupId>
 	<artifactId>mockkid</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>mockkid</name>
-	<description>Mocking your kiddos since 2017</description>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/moip/MockKid/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/moip/mockkid</url>
+		<connection>scm:git:git://github.com/moip/mockkid.git</connection>
+		<developerConnection>scm:git:git@github.com:moip/mockkid.git</developerConnection>
+	</scm>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
