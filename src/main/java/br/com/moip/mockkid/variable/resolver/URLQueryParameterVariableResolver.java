@@ -1,4 +1,6 @@
-package br.com.moip.mockkid.variable;
+package br.com.moip.mockkid.variable.resolver;
+
+import br.com.moip.mockkid.variable.VariableResolver;
 
 import javax.servlet.http.HttpServletRequest;
 

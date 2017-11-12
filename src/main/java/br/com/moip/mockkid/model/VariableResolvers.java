@@ -1,4 +1,6 @@
-package br.com.moip.mockkid.variable;
+package br.com.moip.mockkid.model;
+
+import br.com.moip.mockkid.variable.VariableResolver;
 
 import java.util.ArrayList;
 

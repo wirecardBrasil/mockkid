@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.conditional;
 
+import br.com.moip.mockkid.conditional.solver.ContainsConditionalSolver;
 import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.ConditionalType;
 import org.junit.Before;
@@ -12,18 +13,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ContainsConditionTest {
+public class ContainsConditionalSolverTest {
 
-    private ContainsCondition containsCondition;
+    private ContainsConditionalSolver containsConditionalExpression;
 
     @Before
     public void setUp() {
-        containsCondition = new ContainsCondition();
+        containsConditionalExpression = new ContainsConditionalSolver();
     }
 
     @Test
     public void shouldHandleOnlyTheContainsType() {
-        assertEquals(containsCondition.type(), ConditionalType.CONTAINS);
+        assertEquals(containsConditionalExpression.type(), ConditionalType.CONTAINS);
     }
 
     @Test
@@ -31,7 +32,7 @@ public class ContainsConditionTest {
         Map<String, String> variables = of("myvar", "avalueb");
         Conditional conditional = new Conditional(ConditionalType.CONTAINS, "myvar", "value");
 
-        assertTrue(containsCondition.eval(conditional, variables));
+        assertTrue(containsConditionalExpression.eval(conditional, variables));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class ContainsConditionTest {
         Map<String, String> variables = of("myvar", "nope");
         Conditional conditional = new Conditional(ConditionalType.CONTAINS, "myvar", "value");
 
-        assertFalse(containsCondition.eval(conditional, variables));
+        assertFalse(containsConditionalExpression.eval(conditional, variables));
     }
 
     @Test
@@ -47,7 +48,7 @@ public class ContainsConditionTest {
         Map<String, String> variables = of("anothervar", "nope");
         Conditional conditional = new Conditional(ConditionalType.CONTAINS, "myvar", "value");
 
-        assertFalse(containsCondition.eval(conditional, variables));
+        assertFalse(containsConditionalExpression.eval(conditional, variables));
     }
 
 }

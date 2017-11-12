@@ -5,7 +5,7 @@ import br.com.moip.mockkid.model.ConditionalType;
 
 import java.util.Map;
 
-public interface ConditionalExpression {
+public interface ConditionalSolver {
 
     ConditionalType type();
 

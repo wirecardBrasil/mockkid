@@ -1,7 +1,6 @@
 package br.com.moip.mockkid.service;
 
-import br.com.moip.mockkid.conditional.ConditionalExpression;
-import br.com.moip.mockkid.conditional.Conditionals;
+import br.com.moip.mockkid.model.Conditionals;
 import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.ResponseConfiguration;
@@ -38,7 +37,7 @@ public class ConditionalSolver {
     }
 
     public boolean solve(Conditional conditional, Map<String, String> variables) {
-        for (ConditionalExpression c : conditionals) {
+        for (br.com.moip.mockkid.conditional.ConditionalSolver c : conditionals) {
             if (c.type().equals(conditional.getType()) && c.eval(conditional, variables)) return true;
         }
         return false;

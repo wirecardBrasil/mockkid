@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.conditional;
 
+import br.com.moip.mockkid.conditional.solver.EqualsConditionalSolver;
 import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.ConditionalType;
 import org.junit.Before;
@@ -12,18 +13,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class EqualsConditionTest {
+public class EqualsConditionalSolverTest {
 
-    private EqualsCondition equalsCondition;
+    private EqualsConditionalSolver equalsConditionalExpression;
 
     @Before
     public void setUp() {
-        equalsCondition = new EqualsCondition();
+        equalsConditionalExpression = new EqualsConditionalSolver();
     }
 
     @Test
     public void shouldHandleOnlyTheContainsType() {
-        assertEquals(equalsCondition.type(), ConditionalType.EQUALS);
+        assertEquals(equalsConditionalExpression.type(), ConditionalType.EQUALS);
     }
 
     @Test
@@ -31,7 +32,7 @@ public class EqualsConditionTest {
         Map<String, String> variables = of("myvar", "value");
         Conditional conditional = new Conditional(ConditionalType.EQUALS, "myvar", "value");
 
-        assertTrue(equalsCondition.eval(conditional, variables));
+        assertTrue(equalsConditionalExpression.eval(conditional, variables));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class EqualsConditionTest {
         Map<String, String> variables = of("myvar", "nope");
         Conditional conditional = new Conditional(ConditionalType.EQUALS, "myvar", "value");
 
-        assertFalse(equalsCondition.eval(conditional, variables));
+        assertFalse(equalsConditionalExpression.eval(conditional, variables));
     }
 
     @Test
@@ -47,7 +48,7 @@ public class EqualsConditionTest {
         Map<String, String> variables = of("myvar", "thevalueishere");
         Conditional conditional = new Conditional(ConditionalType.EQUALS, "myvar", "value");
 
-        assertFalse(equalsCondition.eval(conditional, variables));
+        assertFalse(equalsConditionalExpression.eval(conditional, variables));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class EqualsConditionTest {
         Map<String, String> variables = of("anothervar", "nope");
         Conditional conditional = new Conditional(ConditionalType.EQUALS, "myvar", "value");
 
-        assertFalse(equalsCondition.eval(conditional, variables));
+        assertFalse(equalsConditionalExpression.eval(conditional, variables));
     }
 
 }

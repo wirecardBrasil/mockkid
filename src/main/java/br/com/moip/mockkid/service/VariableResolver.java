@@ -2,7 +2,7 @@ package br.com.moip.mockkid.service;
 
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.ResponseConfiguration;
-import br.com.moip.mockkid.variable.VariableResolvers;
+import br.com.moip.mockkid.model.VariableResolvers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

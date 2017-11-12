@@ -1,11 +1,12 @@
-package br.com.moip.mockkid.conditional;
+package br.com.moip.mockkid.conditional.solver;
 
+import br.com.moip.mockkid.conditional.ConditionalSolver;
 import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.ConditionalType;
 
 import java.util.Map;
 
-public class EqualsCondition implements ConditionalExpression {
+public class EqualsConditionalSolver implements ConditionalSolver {
 
     @Override
     public ConditionalType type() {

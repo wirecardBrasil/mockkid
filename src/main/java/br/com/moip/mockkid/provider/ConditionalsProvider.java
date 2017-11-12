@@ -1,7 +1,7 @@
 package br.com.moip.mockkid.provider;
 
-import br.com.moip.mockkid.conditional.ConditionalExpression;
-import br.com.moip.mockkid.conditional.Conditionals;
+import br.com.moip.mockkid.conditional.ConditionalSolver;
+import br.com.moip.mockkid.model.Conditionals;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +22,10 @@ public class ConditionalsProvider {
 
     private Conditionals loadConditionalExpressionClasses() {
         Reflections reflections = new Reflections("br.com.moip.mockkid");
-        Set<Class<? extends ConditionalExpression>> conditionals = reflections.getSubTypesOf(ConditionalExpression.class);
+        Set<Class<? extends ConditionalSolver>> conditionals = reflections.getSubTypesOf(ConditionalSolver.class);
         Conditionals instances = new Conditionals();
 
-        for (Class<? extends ConditionalExpression> conditional : conditionals) {
+        for (Class<? extends ConditionalSolver> conditional : conditionals) {
             try {
                 instances.add(conditional.newInstance());
             } catch (IllegalAccessException | InstantiationException e) {

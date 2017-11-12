@@ -1,5 +1,6 @@
-package br.com.moip.mockkid.variable;
+package br.com.moip.mockkid.variable.resolver;
 
+import br.com.moip.mockkid.variable.VariableResolver;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

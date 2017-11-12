@@ -1,7 +1,7 @@
 package br.com.moip.mockkid.provider;
 
 import br.com.moip.mockkid.variable.VariableResolver;
-import br.com.moip.mockkid.variable.VariableResolvers;
+import br.com.moip.mockkid.model.VariableResolvers;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
