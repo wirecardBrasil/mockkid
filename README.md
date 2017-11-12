@@ -67,4 +67,4 @@ are expected to adhere to the [Contributor Covenant](http://contributor-covenant
 
 ## License
 
-This lib is available as open source under the terms of the [MIT License](https://github.com/moip/MockKid/blob/master/LICENSE).
+This project is available as open source under the terms of the [MIT License](https://github.com/moip/MockKid/blob/master/LICENSE).
