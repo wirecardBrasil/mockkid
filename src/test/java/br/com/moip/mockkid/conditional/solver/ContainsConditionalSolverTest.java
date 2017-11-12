@@ -1,4 +1,4 @@
-package br.com.moip.mockkid.conditional;
+package br.com.moip.mockkid.conditional.solver;
 
 import br.com.moip.mockkid.conditional.solver.ContainsConditionalSolver;
 import br.com.moip.mockkid.model.Conditional;
