@@ -5,6 +5,8 @@ import br.com.moip.mockkid.model.Configuration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
@@ -16,6 +18,8 @@ import java.util.Map;
 
 @org.springframework.context.annotation.Configuration
 public class ConfigParser {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigParser.class);
 
     private ObjectMapper mapper;
 
@@ -39,8 +43,7 @@ public class ConfigParser {
             Resource[] resources = resolver.getResources(configurationPath);
             extractConfigsFromResources(configurations, resources);
         } catch (IOException ioe) {
-            System.out.println("Something nasty has happened while trying to read configuration files!");
-            ioe.printStackTrace();
+            logger.error("Something nasty has happened while trying to read configuration files!", ioe);
             throw new IllegalStateException(ioe);
         }
 
@@ -55,8 +58,7 @@ public class ConfigParser {
                 if (configRoot != null)
                     configurations.put(mapKey(configRoot.getConfiguration()), configRoot.getConfiguration());
             } catch (Exception e) {
-                System.out.println("Failed reading configuration from file: " + r.getFile().getName() + ", skipping...");
-                e.printStackTrace();
+                logger.warn("Failed reading configuration from file: " + r.getFile().getName() + ", skipping...", e);
             }
         }
     }
@@ -70,14 +72,14 @@ public class ConfigParser {
     }
 
     private void printConfigurations(Configurations configurations) {
-        System.out.println("-------------------------");
-        System.out.println("EXTRACTED CONFIGURATIONS:");
+        logger.info("-------------------------");
+        logger.info("EXTRACTED CONFIGURATIONS");
+        logger.info("-------------------------");
         for (String key : configurations.keySet()) {
-            System.out.println();
-            System.out.println("KEY= " + key);
-            System.out.println("CONFIG= " + configurations.get(key));
+            logger.info("KEY = " + key);
+            logger.info("CONFIG = " + configurations.get(key));
+            logger.info("-------------------------");
         }
-        System.out.println("-------------------------");
     }
 
 }
