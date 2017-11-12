@@ -1,7 +1,7 @@
 package br.com.moip.mockkid.service;
 
-import br.com.moip.mockkid.model.Conditionals;
 import br.com.moip.mockkid.model.Conditional;
+import br.com.moip.mockkid.model.Conditionals;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.ResponseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,10 @@ public class ConditionalSolver {
             }
         }
 
+        return getDefaultConfiguration(configuration);
+    }
+
+    private ResponseConfiguration getDefaultConfiguration(Configuration configuration) {
         List<ResponseConfiguration> defaults =
                 configuration.getResponseConfigurations().stream()
                         .filter(r -> r.getConditional() == null).collect(Collectors.toList());
