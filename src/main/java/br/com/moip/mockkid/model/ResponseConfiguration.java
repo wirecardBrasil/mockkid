@@ -6,6 +6,15 @@ public class ResponseConfiguration {
     private Conditional conditional;
     private Response response;
 
+    public ResponseConfiguration() {
+    }
+
+    public ResponseConfiguration(String name, Conditional conditional, Response response) {
+        this.name = name;
+        this.conditional = conditional;
+        this.response = response;
+    }
+
     public String getName() {
         return name;
     }
