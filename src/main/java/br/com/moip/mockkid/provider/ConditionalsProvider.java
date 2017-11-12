@@ -1,4 +1,4 @@
-package br.com.moip.mockkid.service;
+package br.com.moip.mockkid.provider;
 
 import br.com.moip.mockkid.conditional.ConditionalExpression;
 import br.com.moip.mockkid.conditional.Conditionals;
@@ -6,17 +6,21 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
 
-@Component
+@Configuration
 public class ConditionalsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(ConditionalsProvider.class);
 
     @Bean
-    private Conditionals conditionals() {
+    public Conditionals getConditionals() {
+        return loadConditionalExpressionClasses();
+    }
+
+    private Conditionals loadConditionalExpressionClasses() {
         Reflections reflections = new Reflections("br.com.moip.mockkid");
         Set<Class<? extends ConditionalExpression>> conditionals = reflections.getSubTypesOf(ConditionalExpression.class);
         Conditionals instances = new Conditionals();

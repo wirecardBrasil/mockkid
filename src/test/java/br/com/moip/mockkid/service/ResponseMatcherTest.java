@@ -38,14 +38,14 @@ public class ResponseMatcherTest {
 
     @Test
     public void testGetResponse() {
-        String responseBody = "Hello ${name}! Your authorization is ${authorization}!";
+        String responseBody = "Hello ${body.name}! Your authorization is ${headers.authorization}!";
         ResponseConfiguration responseConfiguration =
                 new ResponseConfiguration("Config", new Conditional(),
                     new Response(200, null, responseBody));
 
         Mockito.when(conditionalSolver.solve(configuration, httpServletRequestMock)).thenReturn(responseConfiguration);
         Mockito.when(variableResolver.resolveResponseBodyVariables(responseConfiguration, httpServletRequestMock))
-                .thenReturn(of("name", "man", "authorization", "nice"));
+                .thenReturn(of("body.name", "man", "headers.authorization", "nice"));
 
         Response response = responseMatcher.getResponse(configuration, httpServletRequestMock);
 

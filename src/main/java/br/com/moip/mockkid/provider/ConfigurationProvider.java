@@ -1,4 +1,4 @@
-package br.com.moip.mockkid.service;
+package br.com.moip.mockkid.provider;
 
 import br.com.moip.mockkid.configuration.Configurations;
 import br.com.moip.mockkid.model.Configuration;

@@ -2,7 +2,7 @@ package br.com.moip.mockkid.controller;
 
 import br.com.moip.mockkid.facade.MockKidFacade;
 import br.com.moip.mockkid.model.Configuration;
-import br.com.moip.mockkid.service.ConfigurationProvider;
+import br.com.moip.mockkid.provider.ConfigurationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -2,7 +2,7 @@ package br.com.moip.mockkid.facade;
 
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.Response;
-import br.com.moip.mockkid.service.ConfigurationProvider;
+import br.com.moip.mockkid.provider.ConfigurationProvider;
 import br.com.moip.mockkid.service.ResponseEntityFactory;
 import br.com.moip.mockkid.service.ResponseMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
