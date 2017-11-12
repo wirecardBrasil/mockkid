@@ -1,5 +1,5 @@
 # MockKid
-MockKid is a webserver for mocking request and responses. 
+MockKid is a webserver for mocking http responses. 
 
 ## Building & running
 > mvn clean install
