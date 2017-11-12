@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ResponseEntityFactoryTest {
 
-    private ResponseEntityFactory factory = new ResponseEntityFactory();
+    private ResponseEntityFactory responseEntityFactory = new ResponseEntityFactory();
     private HashMap<String, String> headerMap = new HashMap<>();
 
     @Before
@@ -23,9 +23,9 @@ public class ResponseEntityFactoryTest {
 
     @Test
     public void testFromResponse() throws Exception {
-        Response mock = mockResponse();
+        Response response = new Response(201, headerMap, "{\"hello\": \"world\"}");
 
-        ResponseEntity responseEntity = factory.fromResponse(mock);
+        ResponseEntity responseEntity = responseEntityFactory.fromResponse(response);
 
         assertEquals("{\"hello\": \"world\"}", responseEntity.getBody());
         assertEquals(201, responseEntity.getStatusCodeValue());
@@ -33,13 +33,6 @@ public class ResponseEntityFactoryTest {
         headerMap.keySet().forEach(key -> {
             assertEquals(headerMap.get(key), responseEntity.getHeaders().get(key).get(0));
         });
-    }
-
-    private Response mockResponse() {
-        return new Response()
-                .withBody("{\"hello\": \"world\"}")
-                .withHeaders(headerMap)
-                .withStatus(201);
     }
 
 }

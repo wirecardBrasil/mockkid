@@ -25,11 +25,6 @@ public class Response {
         this.status = status;
     }
 
-    public Response withStatus(Integer status) {
-        this.status = status;
-        return this;
-    }
-
     public Map<String, String> getHeaders() {
         return headers;
     }
@@ -38,22 +33,12 @@ public class Response {
         this.headers = headers;
     }
 
-    public Response withHeaders(Map<String, String> headers) {
-        this.headers = headers;
-        return this;
-    }
-
     public String getBody() {
         return body;
     }
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public Response withBody(String body) {
-        this.body = body;
-        return this;
     }
 
     @Override
