@@ -10,4 +10,4 @@ configuration:
         headers:
           content-type: application/json
         body: |
-          {"xpto": "${body.xpto}", "status": "FAIL"}
+          {"xpto": "${body.xpto}", "status": "${body.status}}"}

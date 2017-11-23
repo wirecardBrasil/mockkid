@@ -2,6 +2,7 @@ package br.com.moip.mockkid.controller;
 
 import br.com.moip.mockkid.facade.MockKidFacade;
 import br.com.moip.mockkid.model.Configuration;
+import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.provider.ConfigurationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class MockKidController {
 
     @RequestMapping("/**")
     public ResponseEntity mocks(HttpServletRequest request){
-        return facade.discover(request);
+        return facade.discover(new MockkidRequest(request));
     }
 
 }

@@ -1,6 +1,7 @@
 package br.com.moip.mockkid.facade;
 
 import br.com.moip.mockkid.model.Configuration;
+import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.provider.ConfigurationProvider;
 import br.com.moip.mockkid.service.ResponseEntityFactory;
@@ -23,7 +24,7 @@ public class MockKidFacade {
     @Autowired
     private ResponseEntityFactory responseEntityFactory;
 
-    public ResponseEntity discover(HttpServletRequest request){
+    public ResponseEntity discover(MockkidRequest request) {
         Configuration matchedConfig = configurationProvider.getConfiguration(request);
         Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
         ResponseEntity result = responseEntityFactory.fromResponse(matchedResponse);
