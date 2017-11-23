@@ -11,6 +11,10 @@ public class Response {
     public Response() {
     }
 
+    public Response(Response response) {
+        this(response.status, response.headers, response.body);
+    }
+
     public Response(Integer status, Map<String, String> headers, String body) {
         this.status = status;
         this.headers = headers;
