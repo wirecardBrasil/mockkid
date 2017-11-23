@@ -1,6 +1,5 @@
-package br.com.moip.mockkid.variable.resolver;
+package br.com.moip.mockkid.variable.resolver.body;
 
-import br.com.moip.mockkid.variable.VariableResolver;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -8,20 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-public class JsonBodyVariableResolver implements VariableResolver {
+public class JSONBodyVariableResolver {
 
-    private static final Logger logger = LoggerFactory.getLogger(JsonBodyVariableResolver.class);
+    private static final Logger logger = LoggerFactory.getLogger(JSONBodyVariableResolver.class);
 
-    @Override
-    public boolean handles(String variable) {
-        return variable.startsWith("body.");
-    }
-
-    @Override
-    public String extract(String name, HttpServletRequest request) {
+    public static String extractValueFromJson(String name, HttpServletRequest request) {
         try {
-            JsonObject parse = (JsonObject) new JsonParser().parse(request.getReader());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            JsonObject parse = (JsonObject) new JsonParser().parse(reader);
             String[] nodes = name.replace("body.", "").split("\\.");
 
             JsonElement jsonElement = parse.get(nodes[0]);
@@ -40,7 +36,6 @@ public class JsonBodyVariableResolver implements VariableResolver {
         } catch (Exception e) {
             logger.warn("Couldn't extract variable", e);
         }
-
         return null;
     }
 }
