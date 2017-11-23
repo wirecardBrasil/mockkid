@@ -35,14 +35,15 @@ public class ResponseMatcher {
     }
 
     private Response replaceResponseBody(ResponseConfiguration responseConfiguration, Map<String, String> variables) {
-        String body = responseConfiguration.getResponse().getBody();
+        Response response = new Response(responseConfiguration.getResponse());
+        String body = response.getBody();
 
         for (Map.Entry<String, String> entry : variables.entrySet()) {
             body = body.replace("${" + entry.getKey() + "}", entry.getValue());
         }
 
-        responseConfiguration.getResponse().setBody(body);
-        return responseConfiguration.getResponse();
+        response.setBody(body);
+        return response;
     }
 
 }
