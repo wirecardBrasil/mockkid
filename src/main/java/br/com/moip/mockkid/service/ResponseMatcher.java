@@ -29,9 +29,8 @@ public class ResponseMatcher {
 
     private Response buildResponse(ResponseConfiguration responseConfiguration, HttpServletRequest request) {
         Map<String, String> variables = variableResolver.resolveResponseBodyVariables(responseConfiguration, request);
-        Response response = replaceResponseBody(responseConfiguration, variables);
 
-        return response;
+        return replaceResponseBody(responseConfiguration, variables);
     }
 
     private Response replaceResponseBody(ResponseConfiguration responseConfiguration, Map<String, String> variables) {

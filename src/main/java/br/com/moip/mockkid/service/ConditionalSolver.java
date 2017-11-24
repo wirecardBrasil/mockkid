@@ -40,7 +40,7 @@ public class ConditionalSolver {
         return (defaults.isEmpty() ? null : defaults.get(0));
     }
 
-    public boolean solve(Conditional conditional, Map<String, String> variables) {
+    private boolean solve(Conditional conditional, Map<String, String> variables) {
         for (br.com.moip.mockkid.conditional.ConditionalSolver c : conditionals) {
             if (c.type().equals(conditional.getType()) && c.eval(conditional, variables)) return true;
         }
