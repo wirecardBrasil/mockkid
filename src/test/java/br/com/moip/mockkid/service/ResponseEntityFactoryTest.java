@@ -30,9 +30,7 @@ public class ResponseEntityFactoryTest {
         assertEquals("{\"hello\": \"world\"}", responseEntity.getBody());
         assertEquals(201, responseEntity.getStatusCodeValue());
 
-        headerMap.keySet().forEach(key -> {
-            assertEquals(headerMap.get(key), responseEntity.getHeaders().get(key).get(0));
-        });
+        headerMap.keySet().forEach(key -> assertEquals(headerMap.get(key), responseEntity.getHeaders().get(key).get(0)));
     }
 
 }

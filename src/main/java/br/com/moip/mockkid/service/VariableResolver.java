@@ -3,6 +3,8 @@ package br.com.moip.mockkid.service;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.ResponseConfiguration;
 import br.com.moip.mockkid.model.VariableResolvers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class VariableResolver {
 
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([a-zA-Z\\.]*)\\}");
+    private static final Logger logger = LoggerFactory.getLogger(VariableResolver.class);
 
     @Autowired
     private VariableResolvers variableResolvers;
@@ -65,4 +68,5 @@ public class VariableResolver {
 
         return null;
     }
+
 }

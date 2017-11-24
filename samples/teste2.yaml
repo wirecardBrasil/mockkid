@@ -10,4 +10,10 @@ configuration:
         headers:
           content-type: application/json
         body: |
-          {"xpto": "${body.xpto}", "status": "FAIL"}
+          {
+            "xpto": "${body.root.xpto}",
+            "foobar" : "${body.root.foobar}",
+            "queryparam" : "${url.query}",
+            "header" : "${headers.blah}",
+            "status": "OK"
+          }

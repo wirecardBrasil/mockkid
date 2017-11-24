@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.variable.resolver.body;
 
+import br.com.moip.mockkid.model.MockkidRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -7,7 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.DelegatingServletInputStream;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class JsonBodyVariableResolverTest {
 
     @Mock
-    private HttpServletRequest request;
+    private MockkidRequest request;
 
     @Before
     public void setUp() {
@@ -43,7 +43,7 @@ public class JsonBodyVariableResolverTest {
 
     private void configureRequestWithBody(String body) throws IOException {
         DelegatingServletInputStream stream = new DelegatingServletInputStream(new ByteArrayInputStream(body.getBytes()));
-        Mockito.when(request.getInputStream()).thenReturn(stream);
+        Mockito.when(request.getSafeInputStream()).thenReturn(stream);
     }
 
 }

@@ -1,18 +1,21 @@
 package br.com.moip.mockkid.facade;
 
 import br.com.moip.mockkid.model.Configuration;
+import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.provider.ConfigurationProvider;
 import br.com.moip.mockkid.service.ResponseEntityFactory;
 import br.com.moip.mockkid.service.ResponseMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Component
 public class MockKidFacade {
+
+    private static final Logger logger = LoggerFactory.getLogger(MockKidFacade.class);
 
     @Autowired
     private ConfigurationProvider configurationProvider;
@@ -23,12 +26,18 @@ public class MockKidFacade {
     @Autowired
     private ResponseEntityFactory responseEntityFactory;
 
-    public ResponseEntity discover(HttpServletRequest request){
-        Configuration matchedConfig = configurationProvider.getConfiguration(request);
-        Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
-        ResponseEntity result = responseEntityFactory.fromResponse(matchedResponse);
+    public ResponseEntity discover(MockkidRequest request) {
+        logger.info("Processing new request for URI: {}", request.getRequestURI());
 
-        return result;
+        Configuration matchedConfig = configurationProvider.getConfiguration(request);
+
+        logger.info("Matched Configuration: {}", matchedConfig);
+
+        Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
+
+        logger.info("Matched Response: {}", matchedResponse);
+
+        return responseEntityFactory.fromResponse(matchedResponse);
     }
 
 }

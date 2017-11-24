@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.variable.resolver.body;
 
+import br.com.moip.mockkid.model.MockkidRequest;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,7 +17,8 @@ public class JSONBodyVariableResolver {
 
     public static String extractValueFromJson(String name, HttpServletRequest request) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(((MockkidRequest) request).getSafeInputStream()));
             JsonObject parse = (JsonObject) new JsonParser().parse(reader);
             String[] nodes = name.replace("body.", "").split("\\.");
 

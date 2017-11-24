@@ -1,5 +1,6 @@
 package br.com.moip.mockkid.variable.resolver.body;
 
+import br.com.moip.mockkid.model.MockkidRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -19,7 +20,7 @@ public class XMLBodyVariableResolver {
             DocumentBuilderFactory builderFactory =
                     DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            Document document = builder.parse(request.getInputStream());
+            Document document = builder.parse(((MockkidRequest) request).getSafeInputStream());
 
             XPath xPath =  XPathFactory.newInstance().newXPath();
             String expression = name.replace("body", "").replaceAll("\\.", "/");
