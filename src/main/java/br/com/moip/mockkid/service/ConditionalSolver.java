@@ -22,7 +22,7 @@ public class ConditionalSolver {
     private Conditionals conditionals;
 
     public ResponseConfiguration solve(Configuration configuration, HttpServletRequest request) {
-        Map<String, String> variables = variableResolver.resolveElementVariables(configuration, request);
+        Map<String, String> variables = variableResolver.resolve(configuration, request);
         for (ResponseConfiguration r : configuration.getResponseConfigurations()) {
             if (r.getConditional() != null && solve(r.getConditional(), variables)) {
                 return  r;

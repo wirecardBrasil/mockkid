@@ -9,48 +9,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Component
 public class VariableResolver {
 
-    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([a-zA-Z\\.]*)\\}");
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([a-zA-Z\\._]*)\\}");
     private static final Logger logger = LoggerFactory.getLogger(VariableResolver.class);
 
     @Autowired
     private VariableResolvers variableResolvers;
 
-    public Map<String, String> resolveElementVariables(Configuration config, HttpServletRequest request) {
-        List<String> elements =
-                config.getResponseConfigurations().stream()
-                        .filter(m -> m.getConditional() != null)
-                        .map(m -> m.getConditional().getElement()).collect(Collectors.toList());
-        return resolveVariables(elements, request);
+    public Map<String, String> resolve(Configuration config, HttpServletRequest request) {
+        Set<String> variables = new HashSet<>();
+
+        config.getResponseConfigurations().stream()
+                .filter(m -> m.getConditional() != null)
+                .map(m -> m.getConditional())
+                .forEach(c -> {
+                    if (c.getElement() != null) variables.add(c.getElement());
+                    else if (c.getEval() != null) variables.addAll(getVariables(c.getEval()));
+                });
+
+        Map<String, String> resolvedVariables = resolveVariables(variables, request);
+        logger.info("Variables = " + resolvedVariables);
+
+        return resolvedVariables;
     }
 
-    public Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
-        List<String> names = new ArrayList<>();
+    private Set<String> getVariables(String expression) {
+        Set<String> names = new HashSet<>();
 
-        Matcher matcher = VARIABLE_PATTERN.matcher(config.getResponse().getBody());
+        Matcher matcher = VARIABLE_PATTERN.matcher(expression);
         while (matcher.find()) {
             names.add(matcher.group().replace("${", "").replace("}", ""));
         }
 
-        return resolveVariables(names, request);
+        return names;
     }
 
-    private Map<String, String> resolveVariables(List<String> variableNames, HttpServletRequest request) {
+    public Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
+        return resolveVariables(getVariables(config.getResponse().getBody()), request);
+    }
+
+    private Map<String, String> resolveVariables(Set<String> variableNames, HttpServletRequest request) {
         Map<String, String> variables = new HashMap<>();
 
         for (String name : variableNames) {
             String value = resolveVariable(name, request);
-            if (value != null) variables.put(name, value);
+            variables.put(name, value);
         }
 
         return variables;
