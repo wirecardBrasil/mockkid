@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/moip/mockkid.svg?style=shield)](https://circleci.com/gh/moip/mockkid)
+
 # Mockkid
 Mockkid is a webserver for mocking http responses. 
 
