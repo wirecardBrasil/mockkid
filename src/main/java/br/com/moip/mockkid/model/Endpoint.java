@@ -5,6 +5,14 @@ public class Endpoint {
     private String url;
     private Method method;
 
+    public Endpoint() {
+    }
+
+    public Endpoint(String url, Method method) {
+        this.url = url;
+        this.method = method;
+    }
+
     public String getUrl() {
         return url;
     }
