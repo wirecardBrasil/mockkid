@@ -1,0 +1,35 @@
+configuration:
+  endpoint:
+    url: /myendpoint/eval
+    method: GET
+  responseConfigurations:
+    - responseConfiguration:
+      name: "config1"
+      conditional:
+        type: JAVASCRIPT
+        eval: ${headers.authorization}.indexOf('vis') !== -1
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          the ${headers.authorization} is nice!
+    - responseConfiguration:
+      name: "config2"
+      conditional:
+        type: JAVASCRIPT
+        eval: ${headers.request_number} == 666 && ${headers.authorization} == 'devil'
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          request #${headers.request_number} is from ${headers.authorization}!
+    - responseConfiguration:
+      name: "default"
+      response:
+        status: 401
+        headers:
+          content-type: application/json
+        body: |
+          {"xpto": "MY BAD", "status": "FAIL"}

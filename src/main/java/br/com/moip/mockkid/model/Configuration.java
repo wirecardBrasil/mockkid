@@ -7,6 +7,14 @@ public class Configuration {
     private Endpoint endpoint;
     private List<ResponseConfiguration> responseConfigurations;
 
+    public Configuration() {
+    }
+
+    public Configuration(Endpoint endpoint, List<ResponseConfiguration> responseConfigurations) {
+        this.endpoint = endpoint;
+        this.responseConfigurations = responseConfigurations;
+    }
+
     public Endpoint getEndpoint() {
         return endpoint;
     }
