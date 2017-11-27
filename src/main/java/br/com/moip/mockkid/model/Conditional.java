@@ -5,6 +5,7 @@ public class Conditional {
     private ConditionalType type;
     private String element;
     private String value;
+    private String eval;
 
     public Conditional() {
     }
@@ -13,6 +14,11 @@ public class Conditional {
         this.type = type;
         this.element = element;
         this.value = value;
+    }
+
+    public Conditional(ConditionalType type, String eval) {
+        this.type = type;
+        this.eval = eval;
     }
 
     public ConditionalType getType() {
@@ -54,13 +60,21 @@ public class Conditional {
         return this;
     }
 
+    public String getEval() {
+        return eval;
+    }
+
+    public void setEval(String eval) {
+        this.eval = eval;
+    }
+
     @Override
     public String toString() {
         return "Conditional{" +
                 "type=" + type +
                 ", element='" + element + '\'' +
                 ", value='" + value + '\'' +
+                ", eval='" + eval + '\'' +
                 '}';
     }
-
 }
