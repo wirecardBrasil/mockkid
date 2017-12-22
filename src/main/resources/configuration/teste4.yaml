@@ -1,0 +1,32 @@
+configuration:
+  endpoint:
+    url: /myendpoint/regex
+    method: POST
+  responseConfigurations:
+    - responseConfiguration:
+      name: "default"
+      regex:
+        expression: "&gt;([0-9]+)&lt;"
+        placeholder: regex.payment_id
+      response:
+        status: 200
+        headers:
+          content-type: application/xml
+        body: |
+          <?xml version="1.0" encoding="utf-8"?>
+          <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <soap:Body>
+              <Method xmlns="http://www.moip.com.br">
+                <CheckThis>
+                  &lt;?xml version="1.0" encoding="utf-16"?&gt;
+                  &lt;Dummy&gt;
+                    &lt;Orders&gt;
+                      &lt;Order&gt;
+                        &lt;ID&gt;${regex.payment_id}&lt;/ID&gt;
+                      &lt;/Order&gt;
+                    &lt;/Orders&gt;
+                  &lt;/Dummy&gt;
+                </CheckThis>
+              </Method>
+            </soap:Body>
+          </soap:Envelope>

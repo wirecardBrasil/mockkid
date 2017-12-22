@@ -25,6 +25,9 @@ public class VariableResolver {
     @Autowired
     private VariableResolvers variableResolvers;
 
+    @Autowired
+    private RegexResolver regexResolver;
+
     public Map<String, String> resolve(Configuration config, HttpServletRequest request) {
         Set<String> variables = new HashSet<>();
 
@@ -54,7 +57,10 @@ public class VariableResolver {
     }
 
     public Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
-        return resolveVariables(getVariables(config.getResponse().getBody()), request);
+        Map<String, String> resolvedBodyVars = resolveVariables(getVariables(config.getResponse().getBody()), request);
+        resolvedBodyVars.putAll(regexResolver.resolve(config, request));
+
+        return resolvedBodyVars;
     }
 
     private Map<String, String> resolveVariables(Set<String> variableNames, HttpServletRequest request) {

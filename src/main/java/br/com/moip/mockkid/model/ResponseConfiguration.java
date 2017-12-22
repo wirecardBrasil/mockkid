@@ -5,6 +5,7 @@ public class ResponseConfiguration {
     private String name;
     private Conditional conditional;
     private Response response;
+    private Regex regex;
 
     public ResponseConfiguration() {
     }
@@ -54,12 +55,26 @@ public class ResponseConfiguration {
         return this;
     }
 
+    public Regex getRegex() {
+        return regex;
+    }
+
+    public void setRegex(Regex regex) {
+        this.regex = regex;
+    }
+
+    public ResponseConfiguration withRegex(Regex regex) {
+        this.regex = regex;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "ResponseConfiguration{" +
                 "name='" + name + '\'' +
                 ", conditional=" + conditional +
                 ", response=" + response +
+                ", regex=" + regex +
                 '}';
     }
 
