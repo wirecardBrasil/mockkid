@@ -53,8 +53,7 @@ public class RegexVariableResolver implements VariableResolver {
         String cleanVariable = variable.replace("regex.", "");
 
         List<Regex> matchedRegexes = regex.stream()
-                .filter(r -> r != null)
-                .filter(r -> r.getPlaceholder().equals(cleanVariable))
+                .filter(r -> r != null && r.getPlaceholder().equals(cleanVariable))
                 .collect(Collectors.toList());
 
         if (matchedRegexes.isEmpty()) {
