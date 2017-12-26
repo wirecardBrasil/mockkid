@@ -4,24 +4,31 @@ import br.com.moip.mockkid.model.Conditional;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.Endpoint;
 import br.com.moip.mockkid.model.Method;
+import br.com.moip.mockkid.model.MockkidRequest;
+import br.com.moip.mockkid.model.Regex;
+import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.model.ResponseConfiguration;
 import br.com.moip.mockkid.model.VariableResolvers;
 import org.assertj.core.util.Lists;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
 import org.mockito.Spy;
-import org.springframework.context.annotation.Bean;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import static br.com.moip.mockkid.model.ConditionalType.EQUALS;
 import static br.com.moip.mockkid.model.ConditionalType.JAVASCRIPT;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
+@RunWith(MockitoJUnitRunner.class)
 public class VariableResolverTest {
 
     @InjectMocks
@@ -32,10 +39,11 @@ public class VariableResolverTest {
         add(getMockVariableResolver());
     }};
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+    @Spy
+    private RegexResolver regexResolver = new RegexResolver();
+
+    @Mock
+    private MockkidRequest mockkidRequest;
 
     @Test
     public void shouldResolveVariables() {
@@ -43,6 +51,28 @@ public class VariableResolverTest {
         assertEquals("expression_resolved", variables.get("expression"));
         assertEquals("var_resolved", variables.get("var"));
         assertEquals(2, variables.size());
+    }
+
+    @Test
+    public void testResolveRegexOnResponseBody() throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream("SOCIEDADE ESPORTIVA PALMEIRAS 1914".getBytes());
+        doReturn(bais).when(mockkidRequest).getSafeInputStream();
+
+        Map<String, String> variables = variableResolver.resolveResponseBodyVariables(
+                getRegexResponseConfiguration(),
+                mockkidRequest
+        );
+        assertEquals("1914", variables.get("regex.resolve_me"));
+    }
+
+    private ResponseConfiguration getRegexResponseConfiguration() {
+        Regex regex = new Regex(".*([0-9]{4}).*", "regex.resolve_me");
+        ResponseConfiguration responseConfiguration = new ResponseConfiguration().withRegex(regex);
+
+        Response response = new Response();
+        response.setBody("${regex.resolve_me}");
+
+        return responseConfiguration.withResponse(response);
     }
 
     private Configuration getConfiguration() {
@@ -66,13 +96,6 @@ public class VariableResolverTest {
                 return variable + "_resolved";
             }
         };
-    }
-
-    @Bean
-    private VariableResolvers getVariableResolvers() {
-        VariableResolvers vr = new VariableResolvers();
-        vr.add(getMockVariableResolver());
-        return vr;
     }
 
 }
