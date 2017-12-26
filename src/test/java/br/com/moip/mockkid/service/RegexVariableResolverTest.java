@@ -3,6 +3,7 @@ package br.com.moip.mockkid.service;
 import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import br.com.moip.mockkid.variable.resolver.RegexVariableResolver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,77 +12,81 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RegexResolverTest {
+public class RegexVariableResolverTest {
 
     @Mock
     private MockkidRequest mockkidRequest;
 
-    private RegexResolver regexResolver;
+    private RegexVariableResolver regexResolver;
 
     @Before
     public void before() {
-        this.regexResolver = new RegexResolver();
+        this.regexResolver = new RegexVariableResolver();
     }
 
     @Test
     public void testResponseConfigurationWithoutRegex() {
-        Map<String, String> resolvedMap = regexResolver.resolve(new ResponseConfiguration(), null);
+        String resolved = regexResolver.extract(null, new ResponseConfiguration(), null);
 
-        assertTrue(resolvedMap.isEmpty());
+        assertTrue(resolved.isEmpty());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyPattern() {
-        regexResolver.resolve(buildResponseConfiguration(null, null), null);
+        regexResolver.extract(null, buildResponseConfiguration(null), null);
     }
 
     @Test(expected = PatternSyntaxException.class)
     public void testInvalidPatternSyntax() throws IOException {
-        regexResolver.resolve(
-                buildResponseConfiguration("^[A-Z", ""),
+        regexResolver.extract(
+                null,
+                buildResponseConfiguration("^[A-Z"),
                 buildMockkidRequestWithBody(""));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testMissingRegexGroup() throws IOException {
-        regexResolver.resolve(
-                buildResponseConfiguration("^[A-Z]+", ""),
+        regexResolver.extract(
+                null,
+                buildResponseConfiguration("^[A-Z]+"),
                 buildMockkidRequestWithBody("A"));
     }
 
     @Test
     public void testResolveMatchingRequest() throws IOException {
-        Map<String, String> resolvedMap = regexResolver.resolve(
-                buildResponseConfiguration("&gt;([0-9]+)&lt;", "regex.payment_id"),
+        String resolved = regexResolver.extract(
+                null,
+                buildResponseConfiguration("&gt;([0-9]+)&lt;"),
                 buildMockkidRequestWithBody(
                                 "&lt;Order&gt;\n" +
                                 "       &lt;ID&gt;1914&lt;/ID&gt;\n" +
                                 "&lt;/Order&gt;")
         );
 
-        assertEquals("1914", resolvedMap.get("regex.payment_id"));
+        assertEquals("1914", resolved);
     }
 
     @Test
     public void testResolveNonMatchingRequest() throws IOException {
-        Map<String, String> resolvedMap = regexResolver.resolve(
-                buildResponseConfiguration("&gt;([0-9]+)&lt;", "regex.payment_id"),
+        String resolved = regexResolver.extract(
+                null,
+                buildResponseConfiguration("&gt;([0-9]+)&lt;"),
                 buildMockkidRequestWithBody("PALESTRA ITALIA"));
 
-        assertNull(resolvedMap.get("regex.payment_id"));
+        assertTrue(resolved.isEmpty());
     }
 
-    private ResponseConfiguration buildResponseConfiguration(String expression, String placeholder) {
+    private ResponseConfiguration buildResponseConfiguration(String expression) {
         ResponseConfiguration responseConfiguration = new ResponseConfiguration();
 
-        Regex regex = new Regex(expression, placeholder);
+        Regex regex = new Regex(expression);
         responseConfiguration.setRegex(regex);
 
         return responseConfiguration;

@@ -9,6 +9,7 @@ import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.model.ResponseConfiguration;
 import br.com.moip.mockkid.model.VariableResolvers;
+import br.com.moip.mockkid.variable.resolver.RegexVariableResolver;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +38,8 @@ public class VariableResolverTest {
     @Spy
     private VariableResolvers variableResolvers = new VariableResolvers() {{
         add(getMockVariableResolver());
+        add(new RegexVariableResolver());
     }};
-
-    @Spy
-    private RegexResolver regexResolver = new RegexResolver();
 
     @Mock
     private MockkidRequest mockkidRequest;
@@ -54,7 +53,7 @@ public class VariableResolverTest {
     }
 
     @Test
-    public void testResolveRegexOnResponseBody() throws IOException {
+    public void testResolveRegexResponseBody() throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream("SOCIEDADE ESPORTIVA PALMEIRAS 1914".getBytes());
         doReturn(bais).when(mockkidRequest).getSafeInputStream();
 
@@ -66,7 +65,7 @@ public class VariableResolverTest {
     }
 
     private ResponseConfiguration getRegexResponseConfiguration() {
-        Regex regex = new Regex(".*([0-9]{4}).*", "regex.resolve_me");
+        Regex regex = new Regex(".*([0-9]{4}).*");
         ResponseConfiguration responseConfiguration = new ResponseConfiguration().withRegex(regex);
 
         Response response = new Response();
@@ -89,7 +88,7 @@ public class VariableResolverTest {
         return new br.com.moip.mockkid.variable.VariableResolver() {
             @Override
             public boolean handles(String variable) {
-                return true;
+                return !variable.startsWith("regex.");
             }
             @Override
             public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {

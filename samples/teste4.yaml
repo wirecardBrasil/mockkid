@@ -7,7 +7,6 @@ configuration:
       name: "default"
       regex:
         expression: "&gt;([0-9]+)&lt;"
-        placeholder: regex.payment_id
       response:
         status: 200
         headers:

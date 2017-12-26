@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -29,30 +28,30 @@ public class VariableResolver {
     @Autowired
     private VariableResolvers variableResolvers;
 
-    @Autowired
-    private RegexResolver regexResolver;
-
     public Map<String, String> resolve(Configuration config, HttpServletRequest request) {
         Map<String, String> resolvedVariables = new HashMap<>();
 
-        List<ResponseConfiguration> responseConfigurations = config.getResponseConfigurations()
-                .stream()
-                .filter(m -> m.getConditional() != null)
-                .collect(Collectors.toList());
-
-        for (ResponseConfiguration responseConfiguration: responseConfigurations) {
+        for (ResponseConfiguration responseConfiguration: config.getResponseConfigurations()) {
             Conditional conditional = responseConfiguration.getConditional();
 
-            if (conditional.getElement() != null) {
-                resolvedVariables.putAll(resolveConfigurationElements(responseConfiguration, request));
-            } else if (conditional.getEval() != null) {
-                resolvedVariables.putAll(resolveConfigurationEvals(responseConfiguration, request));
-            }
+            handleConditionals(request, resolvedVariables, responseConfiguration, conditional);
         }
 
         logger.info("Variables = " + resolvedVariables);
 
         return resolvedVariables;
+    }
+
+    private void handleConditionals(HttpServletRequest request, Map<String, String> resolvedVariables, ResponseConfiguration responseConfiguration, Conditional conditional) {
+        if (conditional == null) {
+            return;
+        }
+
+        if (conditional.getElement() != null) {
+            resolvedVariables.putAll(resolveConfigurationElements(responseConfiguration, request));
+        } else if (conditional.getEval() != null) {
+            resolvedVariables.putAll(resolveConfigurationEvals(responseConfiguration, request));
+        }
     }
 
     private Map<String, String> resolveConfigurationEvals(ResponseConfiguration responseConfiguration, HttpServletRequest request) {
@@ -80,7 +79,6 @@ public class VariableResolver {
 
     public Map<String, String> resolveResponseBodyVariables(ResponseConfiguration config, HttpServletRequest request) {
         Map<String, String> resolvedBodyVars = resolveVariables(getVariables(config.getResponse().getBody()), config, request);
-        resolvedBodyVars.putAll(regexResolver.resolve(config, request));
 
         return resolvedBodyVars;
     }

@@ -1,35 +1,37 @@
-package br.com.moip.mockkid.service;
+package br.com.moip.mockkid.variable.resolver;
 
 import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import br.com.moip.mockkid.variable.VariableResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Component
-public class RegexResolver {
+public class RegexVariableResolver implements VariableResolver {
 
-    private static final Logger logger = LoggerFactory.getLogger(RegexResolver.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegexVariableResolver.class);
 
-    public Map<String, String> resolve(ResponseConfiguration config, HttpServletRequest request) {
-        if (config.getRegex() == null) {
-            return Collections.emptyMap();
+    @Override
+    public boolean handles(String variable) {
+        return variable.startsWith("regex.");
+    }
+
+    @Override
+    public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
+        if (responseConfiguration.getRegex() == null) {
+            return "";
         }
 
-        Regex regex = config.getRegex();
+        Regex regex = responseConfiguration.getRegex();
         if (regex.getExpression() == null || regex.getExpression().isEmpty()) {
             throw new IllegalArgumentException("Regex expression is empty");
         }
@@ -39,24 +41,19 @@ public class RegexResolver {
         Pattern pattern = Pattern.compile(regex.getExpression());
         Matcher matcher = pattern.matcher(body);
 
-        return matchExpressionToRequestBody(regex, matcher);
+        return matchExpressionToRequestBody(matcher);
     }
 
-    private Map<String, String> matchExpressionToRequestBody(Regex regex, Matcher matcher) {
+    private String matchExpressionToRequestBody(Matcher matcher) {
         try {
             if (matcher.find()) {
-                Map<String, String> resolvedMap = new HashMap<>();
-
-                String group = matcher.group(1);
-                resolvedMap.put(regex.getPlaceholder(), group);
-
-                return resolvedMap;
+                return matcher.group(1);
             }
         } catch (IndexOutOfBoundsException ie) {
             throw new IllegalArgumentException("Missing group in regex expression");
         }
 
-        return Collections.emptyMap();
+        return "";
     }
 
     private String getBody(HttpServletRequest request) {
@@ -75,5 +72,6 @@ public class RegexResolver {
             return buffer.lines().collect(Collectors.joining("\n"));
         }
     }
+
 
 }
