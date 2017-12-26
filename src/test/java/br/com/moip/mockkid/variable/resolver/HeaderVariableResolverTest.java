@@ -9,9 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class HeaderVariableResolverTest {
 
@@ -41,13 +39,13 @@ public class HeaderVariableResolverTest {
     @Test
     public void shouldExtractVariable() {
         Mockito.when(request.getHeader("authorization")).thenReturn("123");
-        assertEquals("123", resolver.extract("headers.authorization", request));
+        assertEquals("123", resolver.extract("headers.authorization", null, request));
     }
 
     @Test
     public void shouldReturnNullOnUnknownVariable() {
         Mockito.when(request.getHeader("authorization")).thenReturn(null);
-        assertEquals(null, resolver.extract("headers.authorization", request));
+        assertEquals(null, resolver.extract("headers.authorization", null, request));
     }
 
 }

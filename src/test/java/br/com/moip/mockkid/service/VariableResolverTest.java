@@ -92,7 +92,7 @@ public class VariableResolverTest {
                 return true;
             }
             @Override
-            public String extract(String variable, HttpServletRequest request) {
+            public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
                 return variable + "_resolved";
             }
         };
