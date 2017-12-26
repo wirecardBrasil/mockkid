@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class VariableResolver {
         for (ResponseConfiguration responseConfiguration: config.getResponseConfigurations()) {
             Conditional conditional = responseConfiguration.getConditional();
 
-            handleConditionals(request, resolvedVariables, responseConfiguration, conditional);
+            resolvedVariables.putAll(handleConditionals(request, responseConfiguration, conditional));
         }
 
         logger.info("Variables = " + resolvedVariables);
@@ -42,16 +43,20 @@ public class VariableResolver {
         return resolvedVariables;
     }
 
-    private void handleConditionals(HttpServletRequest request, Map<String, String> resolvedVariables, ResponseConfiguration responseConfiguration, Conditional conditional) {
+    private Map<String, String> handleConditionals(HttpServletRequest request, ResponseConfiguration responseConfiguration, Conditional conditional) {
         if (conditional == null) {
-            return;
+            return Collections.emptyMap();
         }
 
         if (conditional.getElement() != null) {
-            resolvedVariables.putAll(resolveConfigurationElements(responseConfiguration, request));
-        } else if (conditional.getEval() != null) {
-            resolvedVariables.putAll(resolveConfigurationEvals(responseConfiguration, request));
+            return resolveConfigurationElements(responseConfiguration, request);
         }
+
+        if (conditional.getEval() != null) {
+            return resolveConfigurationEvals(responseConfiguration, request);
+        }
+
+        return Collections.emptyMap();
     }
 
     private Map<String, String> resolveConfigurationEvals(ResponseConfiguration responseConfiguration, HttpServletRequest request) {
