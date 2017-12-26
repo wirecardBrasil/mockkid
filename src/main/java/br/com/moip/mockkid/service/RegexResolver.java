@@ -29,19 +29,34 @@ public class RegexResolver {
             return Collections.emptyMap();
         }
 
-        Map<String, String> resolvedMap = new HashMap<>();
-
         Regex regex = config.getRegex();
-        Pattern pattern = Pattern.compile(regex.getExpression());
-
-        String body = getBody(request);
-        Matcher matcher = pattern.matcher(body);
-        if (matcher.find()) {
-            String group = matcher.group(1);
-            resolvedMap.put(regex.getPlaceholder(), group);
+        if (regex.getExpression() == null || regex.getExpression().isEmpty()) {
+            throw new IllegalArgumentException("Regex expression is empty");
         }
 
-        return  resolvedMap;
+        String body = getBody(request);
+
+        Pattern pattern = Pattern.compile(regex.getExpression());
+        Matcher matcher = pattern.matcher(body);
+
+        return matchExpressionToRequestBody(regex, matcher);
+    }
+
+    private Map<String, String> matchExpressionToRequestBody(Regex regex, Matcher matcher) {
+        try {
+            if (matcher.find()) {
+                Map<String, String> resolvedMap = new HashMap<>();
+
+                String group = matcher.group(1);
+                resolvedMap.put(regex.getPlaceholder(), group);
+
+                return resolvedMap;
+            }
+        } catch (IndexOutOfBoundsException ie) {
+            throw new IllegalArgumentException("Missing group in regex expression");
+        }
+
+        return Collections.emptyMap();
     }
 
     private String getBody(HttpServletRequest request) {
