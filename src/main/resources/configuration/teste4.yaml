@@ -5,8 +5,13 @@ configuration:
   responseConfigurations:
     - responseConfiguration:
       name: "default"
-      regex:
-        expression: "&gt;([0-9]+)&lt;"
+      regexes:
+        - regex:
+          expression: "&gt;([0-9]+)&lt;"
+          placeholder: payment_id
+        - regex:
+          expression: "&lt;Origin&gt;([A-Z]+)&lt;/Origin&gt;"
+          placeholder: origin
       response:
         status: 200
         headers:
@@ -22,6 +27,7 @@ configuration:
                     &lt;Orders&gt;
                       &lt;Order&gt;
                         &lt;ID&gt;${regex.payment_id}&lt;/ID&gt;
+                        &lt;Origin&gt;${regex.origin}&lt;/Origin&gt;
                       &lt;/Order&gt;
                     &lt;/Orders&gt;
                   &lt;/Dummy&gt;

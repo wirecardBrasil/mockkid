@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -27,11 +28,15 @@ public class RegexVariableResolver implements VariableResolver {
 
     @Override
     public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
-        if (responseConfiguration.getRegex() == null) {
+        if (responseConfiguration.getRegexes() == null) {
             return "";
         }
 
-        Regex regex = responseConfiguration.getRegex();
+        Regex regex = matchRegexWithVariable(responseConfiguration.getRegexes(), variable);
+        if (regex == null) {
+            return "";
+        }
+
         if (regex.getExpression() == null || regex.getExpression().isEmpty()) {
             throw new IllegalArgumentException("Regex expression is empty");
         }
@@ -42,6 +47,25 @@ public class RegexVariableResolver implements VariableResolver {
         Matcher matcher = pattern.matcher(body);
 
         return matchExpressionToRequestBody(matcher);
+    }
+
+    private Regex matchRegexWithVariable(List<Regex> regex, String variable) {
+        String cleanVariable = variable.replace("regex.", "");
+
+        List<Regex> matchedRegexes = regex.stream()
+                .filter(r -> r != null)
+                .filter(r -> r.getPlaceholder().equals(cleanVariable))
+                .collect(Collectors.toList());
+
+        if (matchedRegexes.isEmpty()) {
+            return null;
+        }
+
+        if (matchedRegexes.size() > 1) {
+            throw new IllegalStateException("There are duplicate placeholders for " + variable);
+        }
+
+        return matchedRegexes.get(0);
     }
 
     private String matchExpressionToRequestBody(Matcher matcher) {

@@ -65,8 +65,8 @@ public class VariableResolverTest {
     }
 
     private ResponseConfiguration getRegexResponseConfiguration() {
-        Regex regex = new Regex(".*([0-9]{4}).*");
-        ResponseConfiguration responseConfiguration = new ResponseConfiguration().withRegex(regex);
+        Regex regex = new Regex(".*([0-9]{4}).*", "resolve_me");
+        ResponseConfiguration responseConfiguration = new ResponseConfiguration().withRegexes(Lists.newArrayList(regex));
 
         Response response = new Response();
         response.setBody("${regex.resolve_me}");
