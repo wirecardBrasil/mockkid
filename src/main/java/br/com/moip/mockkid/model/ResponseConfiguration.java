@@ -1,10 +1,13 @@
 package br.com.moip.mockkid.model;
 
+import java.util.List;
+
 public class ResponseConfiguration {
 
     private String name;
     private Conditional conditional;
     private Response response;
+    private List<Regex> regexes;
 
     public ResponseConfiguration() {
     }
@@ -54,13 +57,26 @@ public class ResponseConfiguration {
         return this;
     }
 
+    public List<Regex> getRegexes() {
+        return regexes;
+    }
+
+    public void setRegexes(List<Regex> regexes) {
+        this.regexes = regexes;
+    }
+
+    public ResponseConfiguration withRegexes(List<Regex> regexes) {
+        this.regexes = regexes;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "ResponseConfiguration{" +
                 "name='" + name + '\'' +
                 ", conditional=" + conditional +
                 ", response=" + response +
+                ", regexes=" + regexes +
                 '}';
     }
-
 }

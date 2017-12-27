@@ -11,10 +11,7 @@ import org.springframework.mock.web.DelegatingServletInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BodyVariableResolverTest {
 
@@ -43,20 +40,20 @@ public class BodyVariableResolverTest {
     public void shouldResolveVariablesInJSON() throws IOException {
         Mockito.when(request.getHeader("content-type")).thenReturn("application/json");
         configureRequestWithBody("{ \"name\":\"JOSE\" }");
-        assertEquals("JOSE", resolver.extract("body.name", request));
+        assertEquals("JOSE", resolver.extract("body.name", null, request));
     }
 
     @Test
     public void shouldResolveVariablesInXML() throws IOException {
         Mockito.when(request.getHeader("content-type")).thenReturn("application/xml");
         configureRequestWithBody("<name>JOSE</name>");
-        assertEquals("JOSE", resolver.extract("body.name", request));
+        assertEquals("JOSE", resolver.extract("body.name", null, request));
     }
 
     @Test
     public void shouldNotResolveVariablesWithoutContentType() throws IOException {
         configureRequestWithBody("{ \"name\":\"JOSE\" }");
-        assertNull(resolver.extract("body.name", request));
+        assertNull(resolver.extract("body.name", null, request));
     }
 
     protected void configureRequestWithBody(String body) throws IOException {

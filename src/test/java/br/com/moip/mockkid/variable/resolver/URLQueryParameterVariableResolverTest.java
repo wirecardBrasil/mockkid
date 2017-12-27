@@ -9,9 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class URLQueryParameterVariableResolverTest {
 
@@ -41,13 +39,13 @@ public class URLQueryParameterVariableResolverTest {
     @Test
     public void shouldExtractVariable() {
         Mockito.when(request.getParameter("page")).thenReturn("5");
-        assertEquals("5", resolver.extract("url.page", request));
+        assertEquals("5", resolver.extract("url.page", null, request));
     }
 
     @Test
     public void shouldReturnNullOnUnknownVariable() {
         Mockito.when(request.getParameter("page")).thenReturn(null);
-        assertEquals(null, resolver.extract("url.page", request));
+        assertEquals(null, resolver.extract("url.page", null, request));
     }
 
 }
