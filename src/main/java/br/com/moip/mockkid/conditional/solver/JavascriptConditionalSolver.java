@@ -24,7 +24,7 @@ public class JavascriptConditionalSolver implements ConditionalSolver {
         try {
             return (boolean) buildJSEngine(variables).eval(normalize(conditional, variables));
         } catch (Exception e) {
-            logger.error("Error evaluating javascript function: " + conditional.getEval(), e);
+            logger.error("Error evaluating javascript function: {} -> message: {}", conditional.getEval(), e.getMessage());
             return false;
         }
     }
@@ -36,7 +36,7 @@ public class JavascriptConditionalSolver implements ConditionalSolver {
      */
     private ScriptEngine buildJSEngine(Map<String, String> variables) {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
-        variables.forEach((k,v) -> engine.put(k.replace(".", "_"), v));
+        variables.forEach((k,v) -> engine.put(k.replaceAll("[\\.\\-]", "_"), v));
         return engine;
     }
 
@@ -49,7 +49,7 @@ public class JavascriptConditionalSolver implements ConditionalSolver {
     private String normalize(Conditional conditional, Map<String, String> variables) {
         String eval = conditional.getEval();
         for (String variable : variables.keySet()) {
-            eval = eval.replace("${" + variable + "}", variable.replace(".", "_"));
+            eval = eval.replace("${" + variable + "}", variable.replaceAll("[\\.\\-]", "_"));
         }
         return eval;
     }

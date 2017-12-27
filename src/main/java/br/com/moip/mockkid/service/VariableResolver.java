@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @Component
 public class VariableResolver {
 
-    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([a-zA-Z\\._]*)\\}");
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([a-zA-Z\\._\\-]*)\\}");
     private static final Logger logger = LoggerFactory.getLogger(VariableResolver.class);
 
     @Autowired
