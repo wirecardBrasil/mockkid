@@ -50,7 +50,7 @@ public class Response {
         return "Response{" +
                 "status=" + status +
                 ", headers=" + headers +
-                ", body='" + body + '\'' +
+                ", body=OMITTED" +
                 '}';
     }
 

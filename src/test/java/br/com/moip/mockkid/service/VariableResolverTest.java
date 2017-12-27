@@ -49,7 +49,9 @@ public class VariableResolverTest {
         Map<String, String> variables = variableResolver.resolve(getConfiguration(), null);
         assertEquals("expression_resolved", variables.get("expression"));
         assertEquals("var_resolved", variables.get("var"));
-        assertEquals(2, variables.size());
+        assertEquals("with.dot_resolved", variables.get("with.dot"));
+        assertEquals("with-dash_resolved", variables.get("with-dash"));
+        assertEquals(4, variables.size());
     }
 
     @Test
@@ -78,7 +80,9 @@ public class VariableResolverTest {
         List<ResponseConfiguration> responseConfigurations = Lists.newArrayList(
             new ResponseConfiguration("c1", new Conditional(JAVASCRIPT, "${expression}"), null),
             new ResponseConfiguration("c2", new Conditional(EQUALS, "var", null), null),
-            new ResponseConfiguration("c3", null, null)
+            new ResponseConfiguration("c3", null, null),
+            new ResponseConfiguration("c4", new Conditional(JAVASCRIPT, "${with.dot}"), null),
+            new ResponseConfiguration("c5", new Conditional(JAVASCRIPT, "${with-dash}"), null)
         );
 
         return new Configuration(new Endpoint("/endpoint", Method.POST), responseConfigurations);

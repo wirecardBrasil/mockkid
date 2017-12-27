@@ -51,4 +51,19 @@ public class JavascriptConditionalSolverTest {
         assertFalse(jsConditionalSolver.eval(conditional, variables));
     }
 
+    @Test
+    public void evalShouldWorkForVariableWithDot() {
+        Map<String, String> variables = of("with.dot", "value");
+        Conditional conditional = new Conditional(ConditionalType.JAVASCRIPT, "${with.dot} == \"value\"");
+
+        assertTrue(jsConditionalSolver.eval(conditional, variables));
+    }
+
+    @Test
+    public void evalShouldWorkForVariableWithDash() {
+        Map<String, String> variables = of("with-dash", "value");
+        Conditional conditional = new Conditional(ConditionalType.JAVASCRIPT, "${with-dash} == \"value\"");
+
+        assertTrue(jsConditionalSolver.eval(conditional, variables));
+    }
 }
