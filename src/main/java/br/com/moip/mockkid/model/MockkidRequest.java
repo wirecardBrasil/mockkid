@@ -30,7 +30,7 @@ public class MockkidRequest extends HttpServletRequestWrapper {
         return new ByteArrayInputStream(getBody().getBytes(StandardCharsets.UTF_8.name()));
     }
 
-    private String getBody() throws IOException {
+    public String getBody() throws IOException {
         if (body == null) {
             body = this.getReader().lines().collect(Collectors.joining());
         }

@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -28,8 +27,7 @@ public class RawBodyVariableResolverTest {
 
     @Test
     public void testExtractBody() throws IOException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("FULL BODY".getBytes());
-        doReturn(byteArrayInputStream).when(mockkidRequest).getSafeInputStream();
+        doReturn("FULL BODY").when(mockkidRequest).getBody();
 
         String extracted = rawBodyVariableResolver.extract(null, null, mockkidRequest);
         assertEquals("FULL BODY", extracted);

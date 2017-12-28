@@ -1,13 +1,14 @@
 package br.com.moip.mockkid.variable.resolver;
 
+import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.ResponseConfiguration;
-import br.com.moip.mockkid.util.MockkidRequestUtil;
 import br.com.moip.mockkid.variable.VariableResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +38,13 @@ public class RegexVariableResolver implements VariableResolver {
             throw new IllegalArgumentException("Regex expression is empty");
         }
 
-        String body = MockkidRequestUtil.getBody(request);
+        String body = null;
+        try {
+            body = ((MockkidRequest)request).getBody();
+        } catch (IOException e) {
+            logger.error("Error while getting request body for variable {}", variable, e);
+            return null;
+        }
 
         Pattern pattern = Pattern.compile(regex.getExpression());
         Matcher matcher = pattern.matcher(body);
