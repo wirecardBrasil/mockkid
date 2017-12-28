@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.regex.PatternSyntaxException;
 
@@ -122,8 +121,7 @@ public class RegexVariableResolverTest {
     }
 
     private MockkidRequest buildMockkidRequestWithBody(String body) throws IOException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
-        doReturn(byteArrayInputStream).when(mockkidRequest).getSafeInputStream();
+        doReturn(body).when(mockkidRequest).getBody();
 
         return mockkidRequest;
     }

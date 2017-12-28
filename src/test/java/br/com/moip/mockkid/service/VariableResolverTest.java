@@ -19,7 +19,6 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -56,8 +55,7 @@ public class VariableResolverTest {
 
     @Test
     public void testResolveRegexResponseBody() throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream("SOCIEDADE ESPORTIVA PALMEIRAS 1914".getBytes());
-        doReturn(bais).when(mockkidRequest).getSafeInputStream();
+        doReturn("SOCIEDADE ESPORTIVA PALMEIRAS 1914").when(mockkidRequest).getBody();
 
         Map<String, String> variables = variableResolver.resolveResponseBodyVariables(
                 getRegexResponseConfiguration(),
