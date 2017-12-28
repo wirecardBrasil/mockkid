@@ -38,7 +38,9 @@ public class ResponseMatcher {
         String body = response.getBody();
 
         for (Map.Entry<String, String> entry : variables.entrySet()) {
-            body = body.replace("${" + entry.getKey() + "}", entry.getValue());
+            if (entry.getValue() != null) {
+                body = body.replace("${" + entry.getKey() + "}", entry.getValue());
+            }
         }
 
         response.setBody(body);

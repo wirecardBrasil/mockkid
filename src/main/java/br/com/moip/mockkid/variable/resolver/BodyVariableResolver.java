@@ -17,9 +17,12 @@ public class BodyVariableResolver implements VariableResolver {
     @Override
     public String extract(String name, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
         String header = request.getHeader("content-type");
-        if ("application/json".equalsIgnoreCase(header)) {
+        boolean isJson = header != null && (header.contains("application/json") || header.contains("text/json"));
+        boolean isXml = header != null && (header.contains("application/xml") || header.contains("text/xml"));
+
+        if (isJson) {
             return JSONBodyVariableResolver.extractValueFromJson(name, request);
-        } else if ("application/xml".equalsIgnoreCase(header)) {
+        } else if (isXml) {
             return XMLBodyVariableResolver.extractValueFromXml(name, request);
         }
 
