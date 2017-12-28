@@ -1,9 +1,8 @@
-package br.com.moip.mockkid.service;
+package br.com.moip.mockkid.variable.resolver;
 
 import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.ResponseConfiguration;
-import br.com.moip.mockkid.variable.resolver.RegexVariableResolver;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
