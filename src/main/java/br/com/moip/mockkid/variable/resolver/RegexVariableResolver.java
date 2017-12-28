@@ -1,17 +1,13 @@
 package br.com.moip.mockkid.variable.resolver;
 
-import br.com.moip.mockkid.model.MockkidRequest;
 import br.com.moip.mockkid.model.Regex;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import br.com.moip.mockkid.util.MockkidRequestUtil;
 import br.com.moip.mockkid.variable.VariableResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,7 +37,7 @@ public class RegexVariableResolver implements VariableResolver {
             throw new IllegalArgumentException("Regex expression is empty");
         }
 
-        String body = getBody(request);
+        String body = MockkidRequestUtil.getBody(request);
 
         Pattern pattern = Pattern.compile(regex.getExpression());
         Matcher matcher = pattern.matcher(body);
@@ -78,23 +74,5 @@ public class RegexVariableResolver implements VariableResolver {
 
         return "";
     }
-
-    private String getBody(HttpServletRequest request) {
-        try {
-            InputStream inputStream = ((MockkidRequest) request).getSafeInputStream();
-            return readFromInputStream(inputStream);
-        } catch (IOException e) {
-            logger.error("Cannot extract body", e);
-        }
-
-        return null;
-    }
-
-    private String readFromInputStream(InputStream input) throws IOException {
-        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
-            return buffer.lines().collect(Collectors.joining("\n"));
-        }
-    }
-
 
 }
