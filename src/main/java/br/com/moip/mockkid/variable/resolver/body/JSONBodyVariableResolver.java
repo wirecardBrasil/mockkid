@@ -26,6 +26,7 @@ public class JSONBodyVariableResolver {
             if (jsonElement instanceof JsonObject && nodes.length>1) {
                 JsonObject jsonObject = (JsonObject) jsonElement;
                 for (int i=1; i<nodes.length-1; i++) {
+                    if (jsonObject == null) return null; //couldn't tread the full path
                     jsonObject = (JsonObject) jsonObject.get(nodes[i]);
                 }
                 jsonElement = jsonObject.get(nodes[nodes.length - 1]);
