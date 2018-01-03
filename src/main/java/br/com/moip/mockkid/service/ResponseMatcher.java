@@ -3,6 +3,8 @@ package br.com.moip.mockkid.service;
 import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.Response;
 import br.com.moip.mockkid.model.ResponseConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,8 @@ import java.util.Map;
 
 @Component
 public class ResponseMatcher {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResponseMatcher.class);
 
     @Autowired
     private ConditionalSolver conditionalSolver;
@@ -23,6 +27,8 @@ public class ResponseMatcher {
         if (responseConfiguration == null) {
             throw new IllegalStateException("Response configuration not found for request.");
         }
+
+        logger.info("Matched ResponseConfig: {}", responseConfiguration);
 
         return buildResponse(responseConfiguration, request);
     }

@@ -35,8 +35,6 @@ public class MockKidFacade {
 
         Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
 
-        logger.info("Matched Response: {}", matchedResponse);
-
         return responseEntityFactory.fromResponse(matchedResponse);
     }
 
