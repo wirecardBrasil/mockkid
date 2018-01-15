@@ -1,14 +1,26 @@
 [![CircleCI](https://circleci.com/gh/moip/mockkid.svg?style=shield)](https://circleci.com/gh/moip/mockkid)
 
 # Mockkid
-Mockkid is a webserver for mocking http responses. 
+Mockkid is a webserver for mocking http responses.
+
+## Pre-requisites
+- Maven
+- Docker (optional)
 
 ## Building & running
 > mvn clean install
-> java -jar target/mockkid-0.0.1-SNAPSHOT.jar
+
+> java -jar target/mockkid.jar
 
 ## Running with external configuration files
-> java -jar target/mockkid-0.0.1-SNAPSHOT.jar --configuration.path=file:samples/*.yaml
+> java -jar target/mockkid.jar --configuration.path=file:samples/*.yaml
+
+## Running on docker-compose
+> docker-compose up --build
+
+Running with docker-compose will point mockkid to the configurations in the *samples* folder.
+
+To use other configurations, edit docker-compose.yml to change the volume or change the samples folder.
 
 ## Samples
 
@@ -58,7 +70,7 @@ More examples can be found at the `samples` directory.
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/moip/mockkid. 
-This project is intended to be a safe, welcoming space for collaboration,  and contributors 
+This project is intended to be a safe, welcoming space for collaboration, and contributors
 are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 1. Fork it (https://github.com/moip/mockkid/fork)

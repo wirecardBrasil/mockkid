@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mockkid:
+    build:
+      context: .
+    container_name: mockkid
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./samples/:/configs/ # change this to point to your configs
