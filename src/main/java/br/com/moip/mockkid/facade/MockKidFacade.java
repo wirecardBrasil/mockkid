@@ -9,6 +9,7 @@ import br.com.moip.mockkid.service.ResponseMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -33,9 +34,18 @@ public class MockKidFacade {
 
         logger.info("Matched Configuration: {}", matchedConfig);
 
-        Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
+        if (matchedConfig == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No configuration found for request URL.");
+        }
 
-        return responseEntityFactory.fromResponse(matchedResponse);
+        try {
+            Response matchedResponse = responseMatcher.getResponse(matchedConfig, request);
+            return responseEntityFactory.fromResponse(matchedResponse);
+        } catch (IllegalStateException ise) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ise.getMessage());
+        }
     }
 
 }

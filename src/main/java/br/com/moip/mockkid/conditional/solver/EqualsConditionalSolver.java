@@ -15,8 +15,8 @@ public class EqualsConditionalSolver implements ConditionalSolver {
 
     @Override
     public boolean eval(Conditional conditional, Map<String, String> variables) {
-        return variables.getOrDefault(conditional.getElement(), "").
-                equalsIgnoreCase(conditional.getValue());
+        String value = variables.get(conditional.getElement()) != null ? variables.get(conditional.getElement()) : "";
+        return value.equalsIgnoreCase(conditional.getValue());
     }
 
 }
