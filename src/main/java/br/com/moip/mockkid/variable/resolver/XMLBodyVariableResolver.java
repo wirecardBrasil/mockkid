@@ -1,6 +1,8 @@
-package br.com.moip.mockkid.variable.resolver.body;
+package br.com.moip.mockkid.variable.resolver;
 
 import br.com.moip.mockkid.model.MockkidRequest;
+import br.com.moip.mockkid.model.ResponseConfiguration;
+import br.com.moip.mockkid.variable.VariableResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -11,14 +13,28 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
-public class XMLBodyVariableResolver {
+public class XMLBodyVariableResolver  implements VariableResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(XMLBodyVariableResolver.class);
 
-    public static String extractValueFromXml(String name, HttpServletRequest request) {
+    @Override
+    public boolean handles(String variable) {
+        return variable.startsWith("body.");
+    }
+
+    @Override
+    public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
+        return isXml(request) ? extractValueFromXml(variable, request) : null;
+    }
+
+    private boolean isXml(HttpServletRequest request) {
+        String header = request.getHeader("content-type");
+        return header != null && (header.contains("application/xml") || header.contains("text/xml"));
+    }
+
+    private String extractValueFromXml(String name, HttpServletRequest request) {
         try {
-            DocumentBuilderFactory builderFactory =
-                    DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document document = builder.parse(((MockkidRequest) request).getSafeInputStream());
 
@@ -30,6 +46,7 @@ public class XMLBodyVariableResolver {
         } catch (Exception e) {
             logger.warn("Couldn't extract variable", e);
         }
+
         return null;
     }
 }

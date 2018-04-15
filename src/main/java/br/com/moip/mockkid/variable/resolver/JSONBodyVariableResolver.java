@@ -1,6 +1,8 @@
-package br.com.moip.mockkid.variable.resolver.body;
+package br.com.moip.mockkid.variable.resolver;
 
 import br.com.moip.mockkid.model.MockkidRequest;
+import br.com.moip.mockkid.model.ResponseConfiguration;
+import br.com.moip.mockkid.variable.VariableResolver;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,11 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class JSONBodyVariableResolver {
+public class JSONBodyVariableResolver  implements VariableResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONBodyVariableResolver.class);
 
-    public static String extractValueFromJson(String name, HttpServletRequest request) {
+    @Override
+    public boolean handles(String variable) {
+        return variable.startsWith("body.");
+    }
+
+    @Override
+    public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
+        return isJson(request) ? extractValueFromJson(variable, request) : null;
+    }
+
+    private boolean isJson(HttpServletRequest request) {
+        String header = request.getHeader("content-type");
+        return header != null && (header.contains("application/json") || header.contains("text/json"));
+    }
+
+    private String extractValueFromJson(String name, HttpServletRequest request) {
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(((MockkidRequest) request).getSafeInputStream()));
@@ -39,6 +56,7 @@ public class JSONBodyVariableResolver {
         } catch (Exception e) {
             logger.warn("Couldn't extract variable", e);
         }
+
         return null;
     }
 }
