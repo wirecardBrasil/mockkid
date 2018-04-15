@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class JSONBodyVariableResolver  implements VariableResolver {
+public class JSONBodyVariableResolver implements VariableResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONBodyVariableResolver.class);
 

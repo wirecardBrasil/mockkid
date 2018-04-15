@@ -13,7 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
-public class XMLBodyVariableResolver  implements VariableResolver {
+public class XMLBodyVariableResolver implements VariableResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(XMLBodyVariableResolver.class);
 
