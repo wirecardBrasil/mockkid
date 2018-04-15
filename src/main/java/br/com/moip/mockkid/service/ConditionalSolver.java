@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,10 +23,13 @@ public class ConditionalSolver {
     private Conditionals conditionals;
 
     public ResponseConfiguration solve(Configuration configuration, HttpServletRequest request) {
-        Map<String, String> variables = variableResolver.resolve(configuration, request);
-        for (ResponseConfiguration r : configuration.getResponseConfigurations()) {
-            if (r.getConditional() != null && solve(r.getConditional(), variables)) {
-                return  r;
+        for (ResponseConfiguration rc : configuration.getResponseConfigurations()) {
+            Conditional conditional = rc.getConditional();
+            if (conditional == null) continue;
+
+            Map<String, String> variables = variableResolver.resolve(rc, conditional, request);
+            if (solve(rc.getConditional(), variables)) {
+                return  rc;
             }
         }
 
