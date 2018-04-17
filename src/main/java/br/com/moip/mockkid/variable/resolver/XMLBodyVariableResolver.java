@@ -18,7 +18,7 @@ public class XMLBodyVariableResolver implements VariableResolver {
     private static final Logger logger = LoggerFactory.getLogger(XMLBodyVariableResolver.class);
 
     @Override
-    public boolean handles(String variable, HttpServletRequest request) {
+    public boolean canHandle(String variable, HttpServletRequest request) {
         return variable.startsWith("body.") && isXml(request);
     }
 

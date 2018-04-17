@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class URLQueryParameterVariableResolver implements VariableResolver {
 
     @Override
-    public boolean handles(String variable, HttpServletRequest request) {
+    public boolean canHandle(String variable, HttpServletRequest request) {
         return variable.startsWith("url.");
     }
 

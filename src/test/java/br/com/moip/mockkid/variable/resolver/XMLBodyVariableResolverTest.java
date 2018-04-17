@@ -27,19 +27,19 @@ public class XMLBodyVariableResolverTest {
 
     @Test
     public void shouldHandle() {
-        assertTrue(resolver.handles("body.name", request));
+        assertTrue(resolver.canHandle("body.name", request));
     }
 
     @Test
     public void shouldNotHandleVariableName() {
-        assertFalse(resolver.handles("url.url", request));
-        assertFalse(resolver.handles("headers.authorization", request));
+        assertFalse(resolver.canHandle("url.url", request));
+        assertFalse(resolver.canHandle("headers.authorization", request));
     }
 
     @Test
     public void shouldNotHandleContentType() {
         Mockito.when(request.getHeader("content-type")).thenReturn("text/plain");
-        assertFalse(resolver.handles("body.name", request));
+        assertFalse(resolver.canHandle("body.name", request));
     }
 
     @Test

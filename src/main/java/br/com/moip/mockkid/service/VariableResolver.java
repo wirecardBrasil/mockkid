@@ -93,7 +93,7 @@ public class VariableResolver {
 
     private String resolveVariable(String variableName, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
         for (br.com.moip.mockkid.variable.VariableResolver resolver : variableResolvers) {
-            if (resolver.handles(variableName, request)) {
+            if (resolver.canHandle(variableName, request)) {
                 String value = resolver.extract(variableName, responseConfiguration, request);
                 if (value != null) {
                     return value;
