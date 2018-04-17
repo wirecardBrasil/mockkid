@@ -26,14 +26,14 @@ public class HeaderVariableResolverTest {
 
     @Test
     public void shouldHandle() {
-        assertTrue(resolver.handles("headers.authorization"));
-        assertTrue(resolver.handles("headers.name"));
+        assertTrue(resolver.handles("headers.authorization", request));
+        assertTrue(resolver.handles("headers.name", request));
     }
 
     @Test
     public void shouldNotHandle() {
-        assertFalse(resolver.handles("body.authorization"));
-        assertFalse(resolver.handles("url.page"));
+        assertFalse(resolver.handles("body.authorization", request));
+        assertFalse(resolver.handles("url.page", request));
     }
 
     @Test

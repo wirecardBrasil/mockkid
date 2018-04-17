@@ -27,20 +27,19 @@ public class XMLBodyVariableResolverTest {
 
     @Test
     public void shouldHandle() {
-        assertTrue(resolver.handles("body.name"));
+        assertTrue(resolver.handles("body.name", request));
     }
 
     @Test
-    public void shouldNotHandle() {
-        assertFalse(resolver.handles("url.url"));
-        assertFalse(resolver.handles("headers.authorization"));
+    public void shouldNotHandleVariableName() {
+        assertFalse(resolver.handles("url.url", request));
+        assertFalse(resolver.handles("headers.authorization", request));
     }
 
     @Test
-    public void shouldReturnNullOnUnknownContentType() throws IOException {
+    public void shouldNotHandleContentType() {
         Mockito.when(request.getHeader("content-type")).thenReturn("text/plain");
-        configureRequestWithBody("{ \"name\":\"JOSE\" }");
-        assertEquals(null, resolver.extract("body.name", null, request));
+        assertFalse(resolver.handles("body.name", request));
     }
 
     @Test

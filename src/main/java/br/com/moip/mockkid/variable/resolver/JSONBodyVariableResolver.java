@@ -18,13 +18,13 @@ public class JSONBodyVariableResolver implements VariableResolver {
     private static final Logger logger = LoggerFactory.getLogger(JSONBodyVariableResolver.class);
 
     @Override
-    public boolean handles(String variable) {
-        return variable.startsWith("body.");
+    public boolean handles(String variable, HttpServletRequest request) {
+        return variable.startsWith("body.") && isJson(request);
     }
 
     @Override
     public String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
-        return isJson(request) ? extractValueFromJson(variable, request) : null;
+        return extractValueFromJson(variable, request);
     }
 
     private boolean isJson(HttpServletRequest request) {

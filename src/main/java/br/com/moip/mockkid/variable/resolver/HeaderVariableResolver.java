@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HeaderVariableResolver implements VariableResolver {
 
     @Override
-    public boolean handles(String variable) {
+    public boolean handles(String variable, HttpServletRequest request) {
         return variable.startsWith("headers.");
     }
 

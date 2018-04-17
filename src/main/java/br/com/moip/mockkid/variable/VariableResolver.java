@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface VariableResolver {
 
-    boolean handles(String variable);
+    boolean handles(String variable, HttpServletRequest request);
 
     String extract(String variable, ResponseConfiguration responseConfiguration, HttpServletRequest request);
 

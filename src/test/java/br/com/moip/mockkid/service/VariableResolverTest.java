@@ -96,7 +96,7 @@ public class VariableResolverTest {
     private br.com.moip.mockkid.variable.VariableResolver getMockVariableResolver() {
         return new br.com.moip.mockkid.variable.VariableResolver() {
             @Override
-            public boolean handles(String variable) {
+            public boolean handles(String variable, HttpServletRequest request) {
                 return !variable.startsWith("regex.");
             }
             @Override
