@@ -69,6 +69,15 @@ pipeline {
           sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
         }
     }
+    stage('Deploy') {
+      when {
+        environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
+      }
+      steps {
+        sh 'cat vars'
+        sh 'python deploy-bag.py'
+      }
+    }
   }
   triggers {
     pollSCM('H/3 * * * *')
