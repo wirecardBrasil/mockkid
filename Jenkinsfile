@@ -49,7 +49,7 @@ pipeline {
               sh "echo 'hmlg'"
             }
           }
-          sh "cd /tmp/workspace/mockid_ci-cd"
+          sh "cd /tmp/workspace/mockkid_ci-cd"
           sh "docker build -t ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App} ."
           sh "echo ${ENV_ID} > env"
         }
