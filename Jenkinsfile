@@ -36,7 +36,7 @@ pipeline {
     }
     stage('Build Images') {
       steps {
-         script {
+          script {
             if ( params.EnvironmentAws == 'pci') {
               sh "echo 'pci'"
               ENV_ID = env.AWS_PCI_ID
@@ -49,27 +49,18 @@ pipeline {
               sh "echo 'hmlg'"
             }
           }
-        sh '''
-          cd /tmp/workspace/mockkid_ci-cd/
-          docker build -t ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App} --network=host .
-        '''
-      }
+          sh "cd /tmp/workspace/mockid_ci-cd"
+          sh "docker build -t ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App} ."
+          sh "echo ${ENV_ID} > env"
+        }
     }
     stage('Push Images') {
       steps {
-        sh '''
-          aws ecr get-login --region us-east-1 --no-include-email |sh
-          docker push ${EnvironmentAws}.dkr.ecr.us-east-1.amazonaws.com/ecr-${Environment}-${App}
-        '''
-      }
+          sh "ENV_ID=`cat env`"
+          sh "aws ecr get-login --region us-east-1 --no-include-email |sh"
+          sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
+        }
     }
-    stage('Deploy') {
-      steps {
-        sh 'python deploy-bag.py'
-      }
-    }
-  }  
-
   triggers {
     pollSCM('H/3 * * * *')
    }
