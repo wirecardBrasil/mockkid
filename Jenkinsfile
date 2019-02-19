@@ -50,7 +50,7 @@ pipeline {
             }
           }
         sh '''
-          cd /tmp/workspace/mockkid-mockid/
+          cd /tmp/workspace/mockkid-ci-cd/
           docker build -t ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App} --network=host .
         '''
       }
