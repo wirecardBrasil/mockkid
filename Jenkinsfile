@@ -27,9 +27,9 @@ pipeline {
         withCredentials(bindings: [string(credentialsId: 'GIT_TOKEN', variable: 'GitToken')]) {
           sh '''
               ls -l
-              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/teste-bag-webapp.py
-              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/deploy-bag-webapp.py
-              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/remove-teste-bag-webapp.py
+              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/teste-bag.py
+              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/deploy-bag.py
+              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/sre-shs/contents/scripts/remove-teste-bag.py
           '''
         }
       }
