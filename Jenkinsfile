@@ -14,8 +14,8 @@ pipeline {
   parameters {
     string(defaultValue: 'mkid-app', description: 'App', name: 'App')
     string(defaultValue: 'prod', description: 'Insert the Environment', name: 'EnvironmentAws')
-    string(defaultValue: '5672', description: 'Insert PortFront', name: 'PortFront')
-    string(defaultValue: '15672', description: 'Insert PortApp', name: 'PortApp')
+    string(defaultValue: '8080', description: 'Insert PortFront', name: 'PortFront')
+    string(defaultValue: '80', description: 'Insert PortApp', name: 'PortApp')
     string(defaultValue: '1', description: 'Insert MinSize', name: 'MinSize')
     string(defaultValue: '1', description: 'Insert DesiredCapacity', name: 'DesiredCapacity')
     string(defaultValue: '1', description: 'Insert MaxSize', name: 'MaxSize')
