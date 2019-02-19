@@ -71,7 +71,6 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh 'cat vars'
         sh 'python deploy-bag.py'
       }
     }
