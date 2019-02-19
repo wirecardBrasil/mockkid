@@ -34,6 +34,14 @@ pipeline {
         }
       }
     }
+    stage('Build APP') {
+      steps {
+        sh '''
+        cd /tmp/workspace/mockkid_ci-cd
+        mvn clean install
+        '''
+      }
+    }
     stage('Build Images') {
       steps {
           script {
