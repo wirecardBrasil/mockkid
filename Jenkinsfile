@@ -70,9 +70,6 @@ pipeline {
         }
     }
     stage('Deploy') {
-      when {
-        environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
-      }
       steps {
         sh 'cat vars'
         sh 'python deploy-bag.py'
