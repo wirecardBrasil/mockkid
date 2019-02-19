@@ -61,7 +61,9 @@ pipeline {
           sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
         }
     }
+  }
   triggers {
     pollSCM('H/3 * * * *')
    }
   }
+}
