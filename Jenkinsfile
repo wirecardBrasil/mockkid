@@ -65,3 +65,4 @@ pipeline {
     pollSCM('H/3 * * * *')
    }
   }
+}
