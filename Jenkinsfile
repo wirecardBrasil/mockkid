@@ -41,12 +41,12 @@ pipeline {
               sh "echo 'pci'"
               ENV_ID = env.AWS_PCI_ID
             } else if ( params.EnvironmentAws == 'prod') {
-              sh "echo 'pci'"
+              sh "echo 'prod'"
               ENV_ID = env.AWS_PROD_ID
             } else if ( params.EnvironmentAws == 'sand') {
-              sh "echo 'pci'"
+              sh "echo 'sand'"
             } else if ( params.EnvironmentAws == 'hmlg') {
-              sh "echo 'pci'"
+              sh "echo 'hmlg'"
             }
           }
         sh '''
