@@ -39,9 +39,7 @@ pipeline {
       steps {
         withCredentials(bindings: [string(credentialsId: 'GIT_TOKEN', variable: 'GitToken')]) {
           sh '''
-              cd /tmp/workspace/mockkid_ci-cd/
-              git clone https://github.com/wirecardBrasil/mockkid-configs.git
-              cp -pRvf mockkid-configs/configs/* src/main/resources/configuration
+            sleep 100
           '''
         }
       }
@@ -77,15 +75,15 @@ pipeline {
     }
     stage('Push Images') {
       steps {
-        environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
               withCredentials([
                       usernamePassword(credentialsId: 'AWS_KEYS', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
-                ]) 
+                ]) { 
           sh "ENV_ID=`cat env`"
           sh "AWS_ACCESS_KEY_ID=${AWS_KEY} AWS_SECRET_ACCESS_KEY=${AWS_SECRET} aws ecr get-login --region us-east-1 --no-include-email |sh"
           sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
         }
     }
+  }
     stage('Deploy') {
       steps {
               withCredentials([
