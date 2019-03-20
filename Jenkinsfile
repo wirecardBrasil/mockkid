@@ -78,7 +78,7 @@ pipeline {
       steps {
         environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
               withCredentials([
-                      usernamePassword(credentialsId: 'AWS_KEYS_PROD', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
+                      usernamePassword(credentialsId: 'AWS_KEYS', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
                 ]) 
           sh "ENV_ID=`cat env`"
           sh "AWS_ACCESS_KEY_ID=${AWS_KEY} AWS_SECRET_ACCESS_KEY=${AWS_SECRET} aws ecr get-login --region us-east-1 --no-include-email |sh"
@@ -88,7 +88,7 @@ pipeline {
     stage('Deploy') {
       steps {
               withCredentials([
-                      usernamePassword(credentialsId: 'AWS_KEYS_PROD', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
+                      usernamePassword(credentialsId: 'AWS_KEYS', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
                 ]) {
         sh 'AWS_ACCESS_KEY_ID=${AWS_KEY} AWS_SECRET_ACCESS_KEY=${AWS_SECRET} python deploy-bag.py'
       }
