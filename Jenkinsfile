@@ -76,17 +76,28 @@ pipeline {
     }
     stage('Push Images') {
       steps {
+        environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
+      }
+      steps {
+              withCredentials([
+                      usernamePassword(credentialsId: 'AWS_KEYS_PROD', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
+                ]) {
           sh "ENV_ID=`cat env`"
-          sh "aws ecr get-login --region us-east-1 --no-include-email |sh"
+          sh "AWS_ACCESS_KEY_ID=${AWS_KEY} AWS_SECRET_ACCESS_KEY=${AWS_SECRET} aws ecr get-login --region us-east-1 --no-include-email |sh"
           sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
         }
     }
+  }
     stage('Deploy') {
       steps {
-        sh 'python deploy-bag.py'
+              withCredentials([
+                      usernamePassword(credentialsId: 'AWS_KEYS_PROD', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
+                ]) {
+        sh 'AWS_ACCESS_KEY_ID=${AWS_KEY} AWS_SECRET_ACCESS_KEY=${AWS_SECRET} python deploy-bag.py'
       }
     }
   }
+}
   triggers {
     pollSCM('H/3 * * * *')
    }
