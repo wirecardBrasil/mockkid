@@ -39,8 +39,9 @@ pipeline {
       steps {
         withCredentials(bindings: [string(credentialsId: 'GIT_TOKEN', variable: 'GitToken')]) {
           sh '''
-              cd /tmp/workspace/mockkid_ci-cd/src/main/resources/configuration
-              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/mockkid-configs/configs/cielo.yaml
+              cd /tmp/workspace/mockkid_ci-cd/
+              git clone https://github.com/wirecardBrasil/mockkid-configs.git
+              cp -pRvf mockkid-configs/configs/* src/main/resources/configuration
           '''
         }
       }
