@@ -85,7 +85,6 @@ pipeline {
           sh "docker push ${ENV_ID}.dkr.ecr.us-east-1.amazonaws.com/ecr-${EnvironmentAws}-${App}"
         }
     }
-  }
     stage('Deploy') {
       steps {
               withCredentials([
