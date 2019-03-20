@@ -77,8 +77,6 @@ pipeline {
     stage('Push Images') {
       steps {
         environment name: 'TAG_ON_DOCKER_HUB', value: 'yes'
-      }
-      steps {
               withCredentials([
                       usernamePassword(credentialsId: 'AWS_KEYS_PROD', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
                 ]) {
