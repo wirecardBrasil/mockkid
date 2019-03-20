@@ -34,6 +34,18 @@ pipeline {
         }
       }
     }
+
+    stage('Download Configs') {
+      steps {
+        withCredentials(bindings: [string(credentialsId: 'GIT_TOKEN', variable: 'GitToken')]) {
+          sh '''
+              cd /tmp/workspace/mockkid_ci-cd/src/main/resource/configuration
+              curl -H "Authorization: token ${GitToken}" -H \'Accept: application/vnd.github.v4.raw\' -O -L https://api.github.com/repos/moip/mockkid-configs/configs/*.yaml
+          '''
+        }
+      }
+    }
+
     stage('Build APP') {
       steps {
         sh '''
