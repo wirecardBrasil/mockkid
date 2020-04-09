@@ -26,14 +26,14 @@ public class URLQueryParameterVariableResolverTest {
 
     @Test
     public void shouldHandle() {
-        assertTrue(resolver.handles("url.authorization"));
-        assertTrue(resolver.handles("url.name"));
+        assertTrue(resolver.canHandle("url.authorization", request));
+        assertTrue(resolver.canHandle("url.name", request));
     }
 
     @Test
     public void shouldNotHandle() {
-        assertFalse(resolver.handles("body.authorization"));
-        assertFalse(resolver.handles("headers.page"));
+        assertFalse(resolver.canHandle("body.authorization", request));
+        assertFalse(resolver.canHandle("headers.page", request));
     }
 
     @Test

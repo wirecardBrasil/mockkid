@@ -14,7 +14,7 @@ public class RawBodyVariableResolver implements VariableResolver {
     private static final Logger logger = LoggerFactory.getLogger(RawBodyVariableResolver.class);
 
     @Override
-    public boolean handles(String variable) {
+    public boolean canHandle(String variable, HttpServletRequest request) {
         return variable.equals("body");
     }
 

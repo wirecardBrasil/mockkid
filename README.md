@@ -1,7 +1,7 @@
-[![CircleCI](https://circleci.com/gh/moip/mockkid.svg?style=shield)](https://circleci.com/gh/moip/mockkid)
+[![CircleCI](https://circleci.com/gh/moip/mockkid.svg?style=shield)](https://circleci.com/gh/moip/mockkid) [![codecov](https://codecov.io/gh/moip/mockkid/branch/master/graph/badge.svg)](https://codecov.io/gh/moip/mockkid)
 
 # Mockkid
-Mockkid is a webserver for mocking http responses.
+Mock Kid is a web server for mocking http responses through file-based configurations.
 
 ## Pre-requisites
 - Maven
@@ -20,7 +20,7 @@ Mockkid is a webserver for mocking http responses.
 
 Running with docker-compose will point mockkid to the configurations in the *samples* folder.
 
-To use other configurations, edit docker-compose.yml to change the volume or change the samples folder.
+To use other configurations, edit `docker-compose.yml` to change the volume or change the samples folder.
 
 ## Samples
 

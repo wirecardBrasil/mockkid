@@ -1,7 +1,6 @@
 package br.com.moip.mockkid.service;
 
 import br.com.moip.mockkid.model.Conditional;
-import br.com.moip.mockkid.model.Configuration;
 import br.com.moip.mockkid.model.ResponseConfiguration;
 import br.com.moip.mockkid.model.VariableResolvers;
 import org.slf4j.Logger;
@@ -29,17 +28,10 @@ public class VariableResolver {
     @Autowired
     private VariableResolvers variableResolvers;
 
-    public Map<String, String> resolve(Configuration config, HttpServletRequest request) {
+    public Map<String, String> resolve(ResponseConfiguration responseConfiguration, Conditional conditional, HttpServletRequest request) {
         Map<String, String> resolvedVariables = new HashMap<>();
-
-        for (ResponseConfiguration responseConfiguration: config.getResponseConfigurations()) {
-            Conditional conditional = responseConfiguration.getConditional();
-
-            resolvedVariables.putAll(handleConditionals(request, responseConfiguration, conditional));
-        }
-
+        resolvedVariables.putAll(handleConditionals(request, responseConfiguration, conditional));
         logger.info("Variables = " + resolvedVariables);
-
         return resolvedVariables;
     }
 
@@ -101,7 +93,7 @@ public class VariableResolver {
 
     private String resolveVariable(String variableName, ResponseConfiguration responseConfiguration, HttpServletRequest request) {
         for (br.com.moip.mockkid.variable.VariableResolver resolver : variableResolvers) {
-            if (resolver.handles(variableName)) {
+            if (resolver.canHandle(variableName, request)) {
                 String value = resolver.extract(variableName, responseConfiguration, request);
                 if (value != null) {
                     return value;

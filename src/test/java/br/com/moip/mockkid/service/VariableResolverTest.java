@@ -20,6 +20,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,13 @@ public class VariableResolverTest {
 
     @Test
     public void shouldResolveVariables() {
-        Map<String, String> variables = variableResolver.resolve(getConfiguration(), null);
+        Map<String, String> variables = new HashMap<>();
+        Configuration configuration = getConfiguration();
+
+        for (ResponseConfiguration rc : configuration.getResponseConfigurations()) {
+            variables.putAll(variableResolver.resolve(rc, rc.getConditional(), null));
+        }
+
         assertEquals("expression_resolved", variables.get("expression"));
         assertEquals("var_resolved", variables.get("var"));
         assertEquals("with.dot_resolved", variables.get("with.dot"));
@@ -89,7 +96,7 @@ public class VariableResolverTest {
     private br.com.moip.mockkid.variable.VariableResolver getMockVariableResolver() {
         return new br.com.moip.mockkid.variable.VariableResolver() {
             @Override
-            public boolean handles(String variable) {
+            public boolean canHandle(String variable, HttpServletRequest request) {
                 return !variable.startsWith("regex.");
             }
             @Override

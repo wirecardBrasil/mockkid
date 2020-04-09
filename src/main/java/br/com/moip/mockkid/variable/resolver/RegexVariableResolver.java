@@ -19,7 +19,7 @@ public class RegexVariableResolver implements VariableResolver {
     private static final Logger logger = LoggerFactory.getLogger(RegexVariableResolver.class);
 
     @Override
-    public boolean handles(String variable) {
+    public boolean canHandle(String variable, HttpServletRequest request) {
         return variable.startsWith("regex.");
     }
 
