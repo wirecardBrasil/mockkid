@@ -1,0 +1,273 @@
+configuration:
+  endpoint:
+    url: /creditcardproxies/api/json
+    method: POST
+  responseConfigurations:
+    - responseConfiguration:
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "aprovar"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+         { "status": "A",
+            "errCode": "00",
+            "subErrorString": "Transacao autorizada",
+            "responseData": {
+              "cvdResponseCode": "P",
+              "externalRrn": "145678"
+            }
+          }
+    - responseConfiguration:
+      name: "Transacao nao autorizada"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "transacao_nao_autorizada"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+
+          { "status": "F",
+             "errCode": "02",
+             "subErrorString": "Transacao não autorizada",
+             "responseData": {
+               "cvdResponseCode": "P",
+               "externalRrn": "145678"
+             }
+          }
+    - responseConfiguration:
+      name: "Timeout"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "Timeout"
+      response:
+        status: 500
+        headers:
+          content-type: application/json
+        body: |
+          {"statusCode": "F", "status": "timeout"}
+
+    - responseConfiguration:
+      name: "Nao aprovar"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "nao_aprovar"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+                       "errCode": "02",
+                       "subErrorString": "nao aprovar",
+                       "responseData": {
+                         "cvdResponseCode": "P",
+                         "externalRrn": "145678"
+                       }
+          }
+    - responseConfiguration:
+      name: "Cartao invalido"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "cartao_invalido"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+
+          { "status": "F",
+                        "errCode": "14",
+                        "subErrorString": "Cartao invalido",
+                        "responseData": {
+                          "cvdResponseCode": "P",
+                          "externalRrn": "145678"
+                        }
+          }
+
+
+    - responseConfiguration:
+      name: "Cartao vencido - cartao retido"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "cartao_vencido_cartao_retido"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+                        "errCode": "14",
+                        "subErrorString": "Cartao vencido - cartao retido",
+                        "responseData": {
+                          "cvdResponseCode": "P",
+                          "externalRrn": "145678"
+                        }
+          }
+    - responseConfiguration:
+      name: "Mau funcionamento do sistema"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "mau_funcionamento_sistema"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+
+          { "status": "F",
+             "errCode": "96",
+             "subErrorString": "Mau funcionamento do sistema",
+              "responseData": {
+               "cvdResponseCode": "P",
+                "externalRrn": "145678"
+                }
+            }
+
+    - responseConfiguration:
+      name: "Cartao roubado"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "cartao_roubado"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+                          "errCode": "43",
+                          "subErrorString": "Cartao roubado",
+                          "responseData": {
+                            "cvdResponseCode": "P",
+                            "externalRrn": "145678"
+                          }
+          }
+
+    - responseConfiguration:
+      name: "Transacao nao aprovada"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "transacao_nao_aprovada"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+                          "errCode": "05",
+                          "subErrorString": "Transacao nao aprovada",
+                          "responseData": {
+                            "cvdResponseCode": "P",
+                            "externalRrn": "145678"
+                          }
+            }
+
+
+
+    - responseConfiguration:
+      name: "Nao autorizado - cartao vencido"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "nao_autorizado_cartao_vencido"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+                          "errCode": "54",
+                          "subErrorString": "Nao autorizado - cartao vencido",
+                          "responseData": {
+                            "cvdResponseCode": "P",
+                            "externalRrn": "145678"
+                          }
+            }
+
+    - responseConfiguration:
+      name: "Codigo secreto incorreto"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "codigo_secreto_incorreto"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+          { "status": "F",
+             "errCode": "55",
+             "subErrorString": "Codigo secreto incorreto",
+              "responseData": {
+                  "cvdResponseCode": "P",
+                  "externalRrn": "145678"
+                }
+            }
+    - responseConfiguration:
+      name: "Cartao bloqueado"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "cartao_bloqueado"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+
+          { "status": "F",
+            "errCode": "76",
+             "subErrorString": "Cartao bloqueado",
+              "responseData": {
+                "cvdResponseCode": "P",
+                "externalRrn": "145678"
+                }
+            }
+
+    - responseConfiguration:
+      name: "unknown host"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "unknown_host"
+      response:
+        status: 500
+        headers:
+          content-type: application/json
+        body: |
+          {"statusCode": "F", "status": "unknown host"}
+
+
+    - responseConfiguration:
+      name: "Cartao suspenso"
+      conditional:
+        type: EQUALS
+        element: body.endCustomer.firstName
+        value: "cartao_suspenso"
+      response:
+        status: 500
+        headers:
+          content-type: application/json
+        body: |
+
+          { "status": "F",
+            "errCode": "S3",
+            "subErrorString": "Cartao suspenso",
+            "responseData": {
+           "cvdResponseCode": "P",
+            "externalRrn": "145678"
+             }
+          }
