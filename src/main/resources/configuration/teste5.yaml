@@ -15,7 +15,7 @@ configuration:
         body: |
           { "status": "A",
              "errCode": "00",
-             "subErrorString": "Transacao autorizada",
+             "subErrorString": "Aprovador",
              "responseData": {
                "cvdResponseCode": "P",
                "externalRrn": "145678"
