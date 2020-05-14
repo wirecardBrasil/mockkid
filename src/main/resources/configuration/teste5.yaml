@@ -3,6 +3,23 @@ configuration:
     url: /creditcardproxies/api/json
     method: POST
   responseConfigurations:
+
+    - responseConfiguration:
+      name: "default"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+            { "status": "A",
+                        "errCode": "00",
+                        "subErrorString": "Aprovador",
+                        "responseData": {
+                          "cvdResponseCode": "P",
+                          "externalRrn": "145678"
+                        }
+                      }
+
     - responseConfiguration:
       conditional:
         type: EQUALS
@@ -21,6 +38,8 @@ configuration:
                "externalRrn": "145678"
              }
            }
+
+
     - responseConfiguration:
       name: "Transacao nao autorizada"
       conditional:
