@@ -3,9 +3,12 @@ configuration:
     url: /creditcardproxies/api/json
     method: POST
   responseConfigurations:
-
     - responseConfiguration:
       name: "default"
+      conditional:
+        type: EQUALS
+        element: body.operation
+        value: "AUTHORIZATION"
       response:
         status: 200
         headers:
@@ -13,13 +16,50 @@ configuration:
         body: |
             { "status": "A",
                         "errCode": "00",
-                        "subErrorString": "Aprovador",
+                        "subErrorString": "Autoriado",
                         "responseData": {
                           "cvdResponseCode": "P",
                           "externalRrn": "145678"
                         }
                       }
-
+    - responseConfiguration:
+      name: "default"
+      conditional:
+        type: EQUALS
+        element: body.operation
+        value: "CAPTURE"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+            { "status": "S",
+                        "errCode": "00",
+                        "subErrorString": "Capturado",
+                        "responseData": {
+                          "cvdResponseCode": "P",
+                          "externalRrn": "145678"
+                        }
+                      }
+    - responseConfiguration:
+      name: "default"
+      conditional:
+        type: EQUALS
+        element: body.operation
+        value: "CANCEL"
+      response:
+        status: 200
+        headers:
+          content-type: application/json
+        body: |
+            { "status": "C",
+                        "errCode": "00",
+                        "subErrorString": "Cancelado",
+                        "responseData": {
+                          "cvdResponseCode": "P",
+                          "externalRrn": "145678"
+                        }
+                      }
     - responseConfiguration:
       conditional:
         type: EQUALS
